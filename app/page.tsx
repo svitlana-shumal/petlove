@@ -1,4 +1,4 @@
-import Container from "@/components/Container/page";
+import Container from "@/components/Container/Container";
 import css from "./page.module.css";
 
 export default function Home() {

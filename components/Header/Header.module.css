@@ -1,0 +1,46 @@
+.headerCont {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 18px;
+}
+
+.left,
+.right {
+  display: flex;
+  gap: 12px;
+}
+
+.logo {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--secondary);
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+.heart {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(1px);
+}
+.heart svg {
+  fill: var(--primary-orange);
+}
+.menu {
+  z-index: 1000;
+  stroke: var(--secondary);
+}
+@media screen and (min-width: 768px) {
+  .logo {
+    font-size: 28px;
+  }
+  .heart svg {
+    width: 23px;
+    height: 23px;
+  }
+  .menu {
+    width: 36px;
+    height: 36px;
+  }
+}

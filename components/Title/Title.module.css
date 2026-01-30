@@ -1,0 +1,19 @@
+.title {
+  font-weight: 700;
+  font-size: 28px;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--secondary);
+  margin-top: 34px;
+}
+@media screen and (min-width: 768px) {
+  .title {
+    font-size: 54px;
+    margin-top: 53px;
+  }
+}
+@media screen and (min-width: 1280px) {
+  .title {
+    margin-top: 64px;
+  }
+}

@@ -1,0 +1,131 @@
+.backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 998;
+}
+
+.menu {
+  position: absolute;
+  top: 0;
+  right: 0;
+  min-width: 218px;
+  background-color: var(--text);
+  padding: 28px 0 40px;
+  z-index: 999;
+  animation: slideDown 0.3s ease;
+}
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.nav {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0 auto;
+
+  margin-top: 218px;
+  margin-bottom: 280px;
+}
+.navList {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.28;
+  letter-spacing: -0.03em;
+  color: var(--secondary);
+  border: 1px solid rgba(38, 38, 38, 0.15);
+  border-radius: 30px;
+  padding: 15px 20px;
+  width: 119px;
+  height: 48px;
+  text-align: center;
+}
+.active {
+  border: 1px solid #f6b83d;
+}
+.auth {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 8px;
+}
+.login {
+  border-radius: 30px;
+  padding: 12px 65px;
+  background-color: var(--primary-orange);
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.28;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: var(--text);
+  margin: 0 auto;
+}
+.register {
+  border-radius: 30px;
+  padding: 12px 40px;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.28;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: var(--primary-orange);
+  background-color: var(--accent);
+  margin: 0 auto;
+}
+.user {
+  /* margin: 0 auto; */
+}
+.profi {
+  visibility: hidden;
+}
+.logout {
+  border-radius: 30px;
+  padding: 12px 60px;
+  background-color: var(--accent);
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.28;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: var(--primary-orange);
+  margin-top: 50px;
+}
+@media screen and (min-width: 768px) {
+  .menu {
+    min-width: 374px;
+    padding: 39px 0 40px;
+  }
+  .nav {
+    margin-top: 330px;
+    margin-bottom: 403px;
+  }
+  .auth {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    gap: 8px;
+    margin: 0 auto;
+  }
+  .login {
+    padding: 15px 35px;
+    font-size: 16px;
+    margin: 0;
+  }
+  .register {
+    padding: 15px 20px;
+    font-size: 16px;
+    margin: 0;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+}

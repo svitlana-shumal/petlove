@@ -1,0 +1,72 @@
+.items {
+  position: relative;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: row;
+  gap: 14px;
+  padding: 40px 20px;
+  background-color: var(--text);
+}
+.workTime {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  border-radius: 30px;
+  padding: 8px;
+  background-color: var(--accent);
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.33;
+  letter-spacing: -0.02em;
+  color: var(--primary-orange);
+}
+.logoWrap {
+  border-radius: 100%;
+}
+.content {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 14px;
+}
+.subtitle {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.28;
+  letter-spacing: -0.02em;
+  color: rgba(38, 38, 38, 0.5);
+}
+.title {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1.25;
+  letter-spacing: -0.04em;
+  color: var(--secondary);
+}
+.contacts {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.item {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.28;
+  letter-spacing: -0.02em;
+  color: var(--secondary);
+}
+
+@media screen and (min-width: 768px) {
+  .workTime {
+    font-size: 14px;
+  }
+  .title {
+    font-size: 20px;
+    line-height: 1.3;
+  }
+  .logo {
+    width: 90px;
+    height: 90px;
+  }
+}
