@@ -1,0 +1,78 @@
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  gap: 11px;
+  padding-bottom: 80px;
+  margin: 0 auto;
+}
+.circle {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.28;
+  color: var(--secondary);
+  border: 1px solid rgba(38, 38, 38, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+}
+.circle:hover:not(:disabled) {
+  border: 1px solid var(--stroke);
+}
+.circle:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.active {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background-color: var(--primary-orange);
+  color: var(--text);
+}
+.ellipsis {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  padding: 12px 14px;
+  color: var(--secondary);
+  font-weight: 500;
+  pointer-events: none;
+  border: 1px solid var(--stroke);
+}
+.ellipsis:focus {
+  border: 1px solid var(--stroke);
+}
+
+.icon {
+  stroke-width: 1px;
+  fill: var(--secondary);
+}
+.right {
+  stroke-width: 1px;
+  fill: var(--secondary);
+  margin-right: -15px;
+}
+.numbers {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  gap: 10px;
+}
+
+@media screen and (min-width: 768px) {
+  .circle,
+  .active,
+  .ellipsis {
+    width: 44px;
+    height: 44px;
+    line-height: 1.22;
+    font-size: 18px;
+  }
+}

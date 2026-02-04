@@ -1,5 +1,5 @@
 :root {
-  --font-family: "Manrope", sans-serif;
+  --font-family: 'Manrope', sans-serif;
   --font-medium: 500;
   --font-bold: 700;
   --font-extrabold: 800;
@@ -9,16 +9,10 @@
   --accent-hover: #fbe7c1;
   --background: #f9f9f9;
   --text: #fff;
-  --gray-text: rgba(38, 38, 38, 0.6);
+  --grey-text: rgba(38, 38, 38, 0.6);
   --light-grey: rgba(38, 38, 38, 0.15);
+  --stroke: rgba(38, 38, 38, 0.05);
 }
-
-/* @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-} */
 
 html,
 body {
@@ -43,7 +37,6 @@ body {
 }
 h1 {
   font-family: var(--font-family);
-  /* font-weight: var(--font-weight-extrabold); */
 }
 
 h2,
@@ -79,9 +72,3 @@ button {
   border: none;
   background-color: transparent;
 }
-
-/* @media (prefers-color-scheme: dark) {
-  html {
-    color-scheme: dark;
-  }
-} */

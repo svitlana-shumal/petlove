@@ -6,6 +6,10 @@
   gap: 14px;
   padding: 40px 20px;
   background-color: var(--text);
+  transition: box-shadow 0.2s ease;
+}
+.items:hover {
+  box-shadow: 16px 5px 16px rgba(0, 0, 0, 0.12);
 }
 .workTime {
   position: absolute;

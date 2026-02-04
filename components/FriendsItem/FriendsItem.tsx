@@ -1,31 +1,29 @@
-import { Friend } from "@/types/friends";
-import css from "./Friends.module.css";
-import Image from "next/image";
-import Link from "next/link";
-import { truncate } from "@/utils/truncate";
+'use client';
+
+import { Friend } from '@/types/friends';
+import css from './Friends.module.css';
+import Image from 'next/image';
+import Link from 'next/link';
+import { truncate } from '@/utils/truncate';
 
 interface FriendsItemProp {
   friend: Friend;
 }
 export default function FriendsItem({ friend }: FriendsItemProp) {
-  const address = friend.address
-    ? truncate(friend.address, 20)
-    : "website only";
+  const address = friend.address ? truncate(friend.address, 20) : 'website only';
 
-  const email = friend.email ? truncate(friend.email, 22) : "phone only";
+  const email = friend.email ? truncate(friend.email, 22) : 'phone only';
 
-  const phone = friend.phone ? truncate(friend.phone, 20) : "email only";
+  const phone = friend.phone ? truncate(friend.phone, 20) : 'email only';
 
   const schedule =
     friend.workDays && friend.workDays.some((day) => day.isOpen)
       ? Array.from(
           new Set(
-            friend.workDays
-              .filter((day) => day.isOpen)
-              .map((day) => `${day.from} - ${day.to}`),
-          ),
-        ).join(", ")
-      : "Day and night";
+            friend.workDays.filter((day) => day.isOpen).map((day) => `${day.from} - ${day.to}`)
+          )
+        ).join(', ')
+      : 'Day and night';
 
   return (
     <li className={css.items}>
@@ -57,10 +55,7 @@ export default function FriendsItem({ friend }: FriendsItemProp) {
             <span className={css.subtitle}> Address: </span>
             {friend.address ? (
               <Link
-                href={
-                  friend.addressUrl ||
-                  `https://maps.google.com/?q=${friend.address}`
-                }
+                href={friend.addressUrl || `https://maps.google.com/?q=${friend.address}`}
                 target="_blank"
                 rel="noopener noreferrer"
               >

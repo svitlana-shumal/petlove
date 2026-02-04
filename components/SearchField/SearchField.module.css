@@ -1,0 +1,57 @@
+.searchCont {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 20px 0 25px;
+  position: relative;
+}
+.input {
+  flex-grow: 1;
+  border: 1px solid rgba(38, 38, 38, 0.15);
+  border-radius: 30px;
+  padding: 12px 92px 12px 12px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.28;
+  letter-spacing: -0.03em;
+  color: rgba(38, 38, 38, 0.5);
+  background-color: transparent;
+}
+.input:hover,
+.input:focus {
+  border: 1px solid #f6b83d;
+}
+.inputBtn {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  fill: var(--text);
+  stroke-width: 2px;
+  stroke: var(--secondary);
+  padding: 2px;
+}
+.clearBtn {
+  position: absolute;
+  right: 35px;
+  top: 50%;
+  transform: translateY(-50%);
+  fill: var(--text);
+  stroke-width: 2px;
+  stroke: var(--secondary);
+  padding: 2px;
+}
+
+@media screen and (min-width: 768px) {
+  .searchCont {
+    max-width: 230px;
+    height: 48px;
+    margin-top: -45px;
+    margin-left: auto;
+    margin-right: 0;
+  }
+  .input {
+    padding: 14px 35px 14px 14px;
+    font-size: 16px;
+  }
+}
