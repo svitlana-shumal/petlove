@@ -1,0 +1,32 @@
+.nav {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+  margin: auto 0;
+}
+.navList {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.28;
+  letter-spacing: -0.03em;
+  color: var(--secondary);
+  border: 1px solid var(--light-grey);
+  border-radius: 30px;
+  padding: 15px 20px;
+  width: 119px;
+  text-align: center;
+  transition:
+    border-color 0.2s,
+    color 0.2s;
+}
+.navList:hover,
+.active {
+  border: 1px solid var(--primary-orange);
+}
+@media screen and (min-width: 768px) {
+  .navList {
+    font-size: 16px;
+    width: 120px;
+  }
+}

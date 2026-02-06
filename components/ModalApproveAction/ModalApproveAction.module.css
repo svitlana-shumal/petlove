@@ -1,0 +1,100 @@
+.backdrop {
+  background-color: rgba(0, 0, 0, 0.4);
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 20px;
+}
+.modal {
+  background-color: var(--text);
+  border-radius: 30px;
+  padding: 40px 28px;
+  max-width: 335px;
+  width: 100%;
+  position: relative;
+  margin: 0 auto;
+  text-align: center;
+}
+.close {
+  position: absolute;
+  stroke-width: 2px;
+  stroke: var(--secondary);
+  top: 20px;
+  right: 20px;
+}
+.imageCat {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  padding: 18px;
+  border-radius: 100%;
+  background-color: var(--accent);
+  margin: 0 auto 20px;
+}
+.text {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--secondary);
+  margin-bottom: 28px;
+  text-align: center;
+}
+.actions {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+}
+.confirm,
+.cancel {
+  flex: 1;
+  text-align: center;
+}
+.confirm {
+  border-radius: 30px;
+  padding: 12px 57px;
+  background-color: var(--primary-orange);
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.28;
+  letter-spacing: -0.03em;
+  color: var(--text);
+}
+.cancel {
+  border-radius: 30px;
+  padding: 12px 44px;
+  background-color: var(--stroke);
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.28;
+  letter-spacing: -0.03em;
+  color: var(--secondary);
+}
+.confirm:hover {
+  background-color: var(--hover);
+}
+.cancel:hover {
+  background-color: var(--accent);
+}
+@media screen and (min-width: 768px) {
+  .backdrop {
+    padding: 0 160px;
+  }
+  .modal {
+    padding: 80px 80px;
+    max-width: 448px;
+  }
+  .text {
+    font-weight: 700;
+    font-size: 24px;
+  }
+  .confirm,
+  .cancel {
+    font-size: 16px;
+    padding: 14px 44px;
+  }
+}

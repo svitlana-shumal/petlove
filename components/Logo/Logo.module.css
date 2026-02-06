@@ -1,0 +1,26 @@
+.logo {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--secondary);
+  line-height: 1;
+  letter-spacing: -0.04em;
+}
+.heart {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transform: translateY(1px);
+}
+.heart svg {
+  fill: var(--primary-orange);
+}
+
+@media screen and (min-width: 768px) {
+  .logo {
+    font-size: 28px;
+  }
+  .heart svg {
+    width: 23px;
+    height: 23px;
+  }
+}

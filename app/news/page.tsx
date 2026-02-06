@@ -32,10 +32,9 @@ export default function News() {
   };
 
   useEffect(() => {
-    const load = async () => {
-      await fetchNews();
-    };
-    load();
+    setTimeout(() => {
+      loadNews();
+    }, 0);
   }, []);
 
   return (

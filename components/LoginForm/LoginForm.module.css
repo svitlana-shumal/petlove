@@ -1,0 +1,86 @@
+.loginForm {
+  border-radius: 30px;
+  background-color: var(--text);
+  padding: 26px 20px;
+}
+.text {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.28;
+  letter-spacing: -0.02em;
+  color: var(--secondary);
+  margin-top: 12px;
+  margin-bottom: 24px;
+}
+.form {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.email,
+.password {
+  border: 1px solid var(--light-grey);
+  border-radius: 30px;
+  padding-block: 12px;
+  padding-inline: 12px 40px;
+  width: 295px;
+  height: 42px;
+}
+
+.passwordField {
+  position: relative;
+}
+.passwordEye {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 0;
+  stroke-width: 1.5px;
+  fill: var(--text);
+  stroke: var(--primary-orange);
+}
+.btn {
+  border-radius: 30px;
+  padding: 12px 99px;
+  width: 295px;
+  height: 42px;
+  background-color: var(--primary-orange);
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.28;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: var(--text);
+  margin-top: 30px;
+}
+.desc {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.16;
+  letter-spacing: -0.03em;
+  color: rgba(38, 38, 38, 0.5);
+  margin: 0 auto;
+  margin-top: 2px;
+  margin-bottom: 27px;
+}
+.login {
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-skip-ink: none;
+  color: #f6b83d;
+}
+.error {
+  font-weight: 500;
+  font-size: 10px;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  color: var(--red);
+  margin-top: -8px;
+  margin-left: 12px;
+}

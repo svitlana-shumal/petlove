@@ -4,6 +4,7 @@
   --font-bold: 700;
   --font-extrabold: 800;
   --primary-orange: #f6b83d;
+  --hover: #f9b020;
   --secondary: #262626;
   --accent: #fff4df;
   --accent-hover: #fbe7c1;
@@ -12,6 +13,9 @@
   --grey-text: rgba(38, 38, 38, 0.6);
   --light-grey: rgba(38, 38, 38, 0.15);
   --stroke: rgba(38, 38, 38, 0.05);
+  --input: rgba(38, 38, 38, 0.5);
+  --red: #ef2447;
+  --green: #08aa83;
 }
 
 html,

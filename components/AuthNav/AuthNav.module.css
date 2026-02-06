@@ -1,0 +1,55 @@
+.auth {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+.login,
+.register {
+  border-radius: 30px;
+  padding: 12px 44px;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.28;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--text);
+  margin: 0 auto;
+  width: 100%;
+  max-width: 200px;
+}
+.login {
+  background-color: var(--primary-orange);
+  color: var(--text);
+}
+.register {
+  background-color: var(--accent);
+  color: var(--primary-orange);
+}
+
+.login:hover {
+  background-color: var(--hover);
+}
+.register:hover {
+  background-color: var(--accent-hover);
+}
+@media screen and (min-width: 768px) {
+  .auth {
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    gap: 8px;
+    margin: 0 auto;
+  }
+  .login {
+    padding: 15px 35px;
+    font-size: 16px;
+    margin: 0;
+  }
+  .register {
+    padding: 15px 20px;
+    font-size: 16px;
+    margin: 0;
+  }
+}

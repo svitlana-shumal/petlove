@@ -31,7 +31,7 @@ export default function NotFound() {
             <p className={css.notFoundTitle}>4</p>
 
             <Image
-              src="/not-found-cat.png"
+              src="/not-found-cat.webp"
               alt="cat"
               width={109}
               height={109}

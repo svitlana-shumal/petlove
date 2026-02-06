@@ -1,0 +1,22 @@
+.logout {
+  border-radius: 30px;
+  padding: 12px 44px;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.28;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  text-align: center;
+  color: var(--text);
+  margin: 0 auto;
+  width: 100%;
+  max-width: 200px;
+}
+
+.logout {
+  background-color: var(--accent);
+  color: var(--primary-orange);
+}
+.logout:hover {
+  background-color: var(--accent-hover);
+}

@@ -1,0 +1,182 @@
+.registration {
+  display: flex;
+  flex-direction: column;
+  border-radius: 30px;
+  background-color: var(--text);
+  padding: 1px 20px 20px 20px;
+}
+.text {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.28;
+  letter-spacing: -0.02em;
+  color: var(--secondary);
+  margin-top: 12px;
+  margin-bottom: 20px;
+}
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.name,
+.email,
+.password,
+.confirm {
+  border: 1px solid var(--light-grey);
+  border-radius: 30px;
+  padding-block: 12px;
+  padding-inline: 12px 60px;
+  width: 100%;
+  max-width: 295px;
+  height: 42px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.28;
+  letter-spacing: -0.03em;
+}
+.invalid {
+  border: 1px solid var(--red);
+}
+.clearBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 0;
+  stroke-width: 1.5px;
+  stroke: var(--red);
+}
+.emailField,
+.passwordField {
+  position: relative;
+}
+.passwordEye {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 0;
+  stroke-width: 1.5px;
+  fill: var(--text);
+  stroke: var(--primary-orange);
+}
+.invalid {
+  border-color: var(--red);
+}
+
+.valid {
+  border-color: var(--green);
+}
+
+.successIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 12px;
+  right: 38px;
+  padding: 0;
+  stroke-width: 1.5px;
+  fill: var(--text);
+  stroke: var(--green);
+}
+
+.btn {
+  border-radius: 30px;
+  padding: 12px 99px;
+  background-color: var(--primary-orange);
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.28;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+  color: var(--text);
+}
+.desc {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 1.16;
+  letter-spacing: -0.03em;
+  color: rgba(38, 38, 38, 0.5);
+  margin: 0 auto;
+  margin-top: 2px;
+  margin-bottom: 27px;
+}
+.login {
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-skip-ink: none;
+  color: var(--primary-orange);
+}
+.error {
+  font-weight: 500;
+  font-size: 10px;
+  line-height: 1.2;
+  letter-spacing: -0.03em;
+  color: var(--red);
+  margin-top: -8px;
+  margin-left: 12px;
+}
+
+@media screen and (min-width: 768px) {
+  .registration {
+    padding: 1px 140px 30px 140px;
+  }
+  .text {
+    font-size: 18px;
+    margin-top: 16px;
+    margin-bottom: 32px;
+  }
+
+  .form {
+    gap: 16px;
+  }
+  .name,
+  .email,
+  .password,
+  .confirm {
+    padding-block: 16px;
+    padding-inline: 16px 80px;
+    max-width: 424px;
+    height: 52px;
+    font-size: 16px;
+    line-height: 1.25;
+  }
+  .successIcon {
+    width: 22px;
+    height: 22px;
+    top: 15px;
+    right: 50px;
+  }
+  .btn {
+    padding: 18px 156px;
+    font-size: 16px;
+    line-height: 1.25;
+  }
+  .desc {
+    font-size: 14px;
+    line-height: 1.42;
+  }
+  .passwordEye,
+  .clearBtn {
+    width: 22px;
+    height: 22px;
+    top: 15px;
+    right: 16px;
+  }
+  .error {
+    font-size: 12px;
+    line-height: 1.16;
+  }
+}
+@media screen and (min-width: 1280px) {
+  .registration {
+    padding: 1px 84px 77px 84px;
+    border-radius: 60px;
+  }
+}

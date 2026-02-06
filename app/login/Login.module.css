@@ -1,0 +1,17 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+@media screen and (min-width: 768px) {
+  .page {
+    gap: 16px;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .page {
+    flex-direction: row;
+    gap: 32px;
+  }
+}

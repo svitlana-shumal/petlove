@@ -7,14 +7,14 @@
 }
 .input {
   flex-grow: 1;
-  border: 1px solid rgba(38, 38, 38, 0.15);
+  border: 1px solid var(--light-grey);
   border-radius: 30px;
   padding: 12px 92px 12px 12px;
   font-weight: 500;
   font-size: 14px;
   line-height: 1.28;
   letter-spacing: -0.03em;
-  color: rgba(38, 38, 38, 0.5);
+  color: var(--input);
   background-color: transparent;
 }
 .input:hover,
@@ -51,7 +51,8 @@
     margin-right: 0;
   }
   .input {
-    padding: 14px 35px 14px 14px;
+    padding: 14px;
+    padding-right: 35px;
     font-size: 16px;
   }
 }
