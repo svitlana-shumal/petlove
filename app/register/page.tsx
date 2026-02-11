@@ -1,3 +1,5 @@
+'use client';
+
 import Container from '@/components/Container/Container';
 import PetBlock from '@/components/PetBlock/PetBlock';
 import RegistrationForm from '@/components/RegistrationForm/RegistrationForm';

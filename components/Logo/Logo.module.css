@@ -1,26 +1,22 @@
-.logo {
-  font-size: 20px;
-  font-weight: 700;
-  color: var(--secondary);
-  line-height: 1;
-  letter-spacing: -0.04em;
+.headerLogo {
+  display: flex;
+  align-items: center;
 }
-.heart {
+.logo {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  transform: translateY(1px);
-}
-.heart svg {
-  fill: var(--primary-orange);
+  text-decoration: none;
+  transition:
+    width 0.3s ease,
+    height 0.3s ease;
 }
 
+.logoIcon {
+  fill: var(--text);
+}
 @media screen and (min-width: 768px) {
-  .logo {
-    font-size: 28px;
-  }
-  .heart svg {
-    width: 23px;
-    height: 23px;
+  .logoIcon {
+    width: 106px;
+    height: 28px;
   }
 }

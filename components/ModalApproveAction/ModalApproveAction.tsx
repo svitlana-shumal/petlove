@@ -1,3 +1,5 @@
+'use client';
+
 import { useEffect } from 'react';
 import css from './ModalApproveAction.module.css';
 import Container from '../Container/Container';

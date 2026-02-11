@@ -11,7 +11,7 @@ export default function Registration() {
     <Container>
       <section className={css.page}>
         <PetBlock
-          alt="Happy cat"
+          alt="Happy dog"
           images={{
             mobile: '/login/dog-mobile.webp',
             tablet: '/login/dog-tablet.webp',

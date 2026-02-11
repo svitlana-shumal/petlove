@@ -2,6 +2,7 @@ import { isAxiosError } from 'axios';
 import { nextServer } from './api';
 import { FetchFriendsResponse } from '@/types/friends';
 import { NewsResponse } from '@/types/news';
+import { AuthResponse, LoginValue, Register } from '@/types/users';
 
 // friends
 
@@ -37,56 +38,57 @@ export const fetchNews = async (
     const data: NewsResponse = await res.json();
     return data;
   } catch (error) {
-    console.log('Помилка завантаження новин:', error);
+    console.log('Error loading news:', error);
     return null;
   }
 };
 
-// users signin
-export async function signIn(email: string, password: string) {
-  try {
-    const res = await fetch(nextServer + '/users/signin', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      credentials: 'include',
-      body: JSON.stringify({ email, password }),
-    });
-    const data = await res.json();
-    if (!res.ok) {
-      throw new Error(data.message || 'Login failed');
-    }
-
-    localStorage.setItem('token', data.token);
-    return data;
-  } catch (err) {
-    throw err;
-  }
-}
-
 // users signup
-export async function signUp(name: string, email: string, password: string) {
-  try {
-    const res = await fetch(nextServer + '/users/signup', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      credentials: 'include',
-      body: JSON.stringify({ name, email, password }),
-    });
-    const data = await res.json();
-    if (!res.ok) {
-      throw new Error(data.message || 'Registration failed');
-    }
-    localStorage.setItem('token', data.token);
-    return data;
-  } catch (err) {
-    throw err;
+export async function signUp(data: Register): Promise<AuthResponse> {
+  const res = await fetch('/api/users/signup', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    credentials: 'include',
+    body: JSON.stringify({
+      name: data.name,
+      email: data.email,
+      password: data.password,
+    }),
+  });
+
+  const result = await res.json();
+
+  if (!res.ok) {
+    throw new Error(result.error || 'Registration failed');
   }
+
+  return result;
+}
+// users signin
+export async function signIn(data: LoginValue): Promise<AuthResponse> {
+  const res = await fetch('/api/users/signin', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+    body: JSON.stringify({ email: data.email, password: data.password }),
+  });
+  const result = await res.json();
+  if (!res.ok) {
+    throw new Error(result.error || 'Login failed');
+  }
+  return result;
 }
 
+// users current
+export async function getCurrentUser() {
+  const res = await fetch('/api/users/current', {
+    credentials: 'include',
+  });
+  if (!res.ok) return null;
+  return res.json();
+}
 // users signout
 export async function signOut() {
   try {

@@ -1,6 +1,7 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
-import LogOutBtn from '../LogOutBtn/LogOutBtn';
 import css from './UserBar.module.css';
 import { User } from '@/types/users';
 
@@ -14,15 +15,14 @@ export default function UserBar({ user, onClose }: UserBarProp) {
     <div className={css.userBar}>
       <Link href="/profile" className={css.user} onClick={onClose}>
         <Image
-          src={user?.avatar || '/user-default.png'}
-          alt="avatar"
+          src={user.avatar || '/user-default.png'}
+          alt={user.name || 'User avatar'}
           width={40}
           height={40}
           className={css.avatar}
         />
         <span className={css.name}>{user.name}</span>
       </Link>
-      <LogOutBtn />
     </div>
   );
 }

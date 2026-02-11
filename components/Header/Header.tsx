@@ -1,53 +1,59 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import css from './Header.module.css';
 import Container from '@/components/Container/Container';
 import MobileMenu from '@/components/MobileMenu/MobileMenu';
 import Logo from '../Logo/Logo';
-import Nav from '../Nav/Nav';
+import Nav from '@/components/Nav/Nav';
+import AuthNav from '@/components/AuthNav/AuthNav';
+import { usePathname } from 'next/navigation';
+import { useAuthStore } from '@/lib/store/auth';
+import UserNav from '@/components/UserNav/UserNav';
 
 export default function Header() {
-  //   const pathname = usePathname();
-  //   const [menuOpen, setMenuOpen] = useState(false);
-
-  // тимчасові дані
-  const isAuth = false;
-  const user = { name: 'Anna', avatar: '' };
-
+  const pathname = usePathname();
+  const isHome = pathname === '/home';
+  const { isAuthenticated } = useAuthStore();
   const [isOpen, setIsOpen] = useState(false);
+
+  useEffect(() => {
+    document.body.style.overflow = isOpen ? 'hidden' : 'auto';
+  }, [isOpen]);
+
   const toggleMenu = () => setIsOpen((prev) => !prev);
 
   return (
-    <header className={css.header}>
-      <Container>
+    <Container className={css.container}>
+      <header className={isHome ? css.headerHome : css.headerDefault}>
         <section className={css.headerCont}>
           <div className={css.left}>
             <Logo />
           </div>
-
-          {/* <Nav /> */}
+          <nav className={css.desktopNav}>
+            <Nav onClose={() => setIsOpen(false)} />
+            {isAuthenticated ? (
+              <UserNav onClose={() => setIsOpen(false)} />
+            ) : (
+              <AuthNav isAuth={isAuthenticated} onClose={() => setIsOpen(false)} />
+            )}
+          </nav>
 
           <div className={css.right}>
-            {/* <button className={css.iconBtn}>
-          <svg width={40} height={40} className={css.user}>
-            <use href="/symbol-defs.svg#icon-user" />
-          </svg>
-        </button> */}
             <button
-              className={css.menu}
+              className={isHome ? css.menu : css.menuDef}
               onClick={toggleMenu}
-              aria-label={isOpen ? 'Close menu' : 'Open menu'}
+              aria-label={'Open menu'}
             >
               <svg width={32} height={32} className={css.menuBtn}>
-                <use href={`/symbol-defs.svg#${isOpen ? 'icon-x' : 'icon-menu'}`} />
+                <use href={'/symbol-defs.svg#icon-menu'} />
               </svg>
             </button>
           </div>
-        </section>
 
-        {isOpen && <MobileMenu isAuth={isAuth} user={user} onClose={() => setIsOpen(false)} />}
-      </Container>
-    </header>
+          {isOpen && <MobileMenu isAuth={isAuthenticated} onClose={() => setIsOpen(false)} />}
+        </section>
+      </header>
+    </Container>
   );
 }

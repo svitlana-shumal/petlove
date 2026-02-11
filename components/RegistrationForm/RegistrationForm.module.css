@@ -1,5 +1,7 @@
 .registration {
   display: flex;
+  align-items: flex-start;
+  justify-content: center;
   flex-direction: column;
   border-radius: 30px;
   background-color: var(--text);
@@ -16,6 +18,7 @@
 }
 .form {
   display: flex;
+  justify-content: center;
   flex-direction: column;
   gap: 10px;
 }
@@ -35,20 +38,7 @@
   line-height: 1.28;
   letter-spacing: -0.03em;
 }
-.invalid {
-  border: 1px solid var(--red);
-}
-.clearBtn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  padding: 0;
-  stroke-width: 1.5px;
-  stroke: var(--red);
-}
+
 .emailField,
 .passwordField {
   position: relative;
@@ -64,6 +54,17 @@
   stroke-width: 1.5px;
   fill: var(--text);
   stroke: var(--primary-orange);
+}
+.clearBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  padding: 0;
+  stroke-width: 1.5px;
+  stroke: var(--red);
 }
 .invalid {
   border-color: var(--red);
@@ -147,12 +148,6 @@
     font-size: 16px;
     line-height: 1.25;
   }
-  .successIcon {
-    width: 22px;
-    height: 22px;
-    top: 15px;
-    right: 50px;
-  }
   .btn {
     padding: 18px 156px;
     font-size: 16px;
@@ -163,11 +158,18 @@
     line-height: 1.42;
   }
   .passwordEye,
-  .clearBtn {
+  .clearBtn,
+  .successIcon {
     width: 22px;
     height: 22px;
     top: 15px;
+  }
+  .passwordEye,
+  .clearBtn {
     right: 16px;
+  }
+  .successIcon {
+    right: 50px;
   }
   .error {
     font-size: 12px;

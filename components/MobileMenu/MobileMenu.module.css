@@ -23,18 +23,26 @@
 @keyframes slideDown {
   from {
     opacity: 0;
-    transform: translateY(100%);
+    transform: translateX(100%);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: translateX(0);
   }
 }
-
+.btn {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+}
+.close {
+  align-self: end;
+  stroke: var(--secondary);
+}
 @media screen and (min-width: 768px) {
   .menu {
     min-width: 374px;
-    padding: 39px 0 40px;
+    padding: 39px 49px 40px;
   }
 }
 @media screen and (min-width: 1280px) {

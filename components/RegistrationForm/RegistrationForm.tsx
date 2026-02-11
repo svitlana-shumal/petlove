@@ -36,7 +36,10 @@ export default function RegistrationForm() {
     control,
     setValue,
     formState: { errors },
-  } = useForm<Register>({ resolver: yupResolver(validationSchema) });
+  } = useForm<Register>({
+    resolver: yupResolver(validationSchema),
+    defaultValues: { name: '', email: '', password: '', confirmPassword: '' },
+  });
 
   const emailValue = useWatch({ control, name: 'email' });
   const passwordValue = useWatch({ control, name: 'password' });
@@ -45,8 +48,9 @@ export default function RegistrationForm() {
 
   const onSubmit = async (data: Register) => {
     try {
-      const result = await signUp(data.name, data.email, data.password);
+      const result = await signUp(data);
       if (result.token) {
+        toast.success('Registration successful 🎉');
         router.push('/profile');
       }
     } catch (error) {
@@ -58,9 +62,10 @@ export default function RegistrationForm() {
     <section className={css.registration}>
       <Title text="Registration" />
       <p className={css.text}>Thank you for your interest in our platform.</p>
-      <form className={css.form} onSubmit={handleSubmit(onSubmit)}>
+      <form className={css.form} noValidate onSubmit={handleSubmit(onSubmit)}>
         <input type="text" placeholder="Name" {...register('name')} className={css.name}></input>
         {errors.name && <span className={css.error}>{errors.name.message}</span>}
+
         <div className={css.emailField}>
           <input
             type="email"

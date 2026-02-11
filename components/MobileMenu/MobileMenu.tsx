@@ -5,8 +5,7 @@ import { useEffect } from 'react';
 import Nav from '../Nav/Nav';
 import AuthNav from '../AuthNav/AuthNav';
 import UserBar from '../UserBar/UserBar';
-
-type User = { name: string; avatar?: string };
+import { User } from '@/types/users';
 
 type MobileMenuProps = {
   isAuth: boolean;
@@ -45,8 +44,17 @@ export default function MobileMenu({ isAuth, user, onClose }: MobileMenuProps) {
       aria-label="Modal menu"
     >
       <div className={css.menu} onClick={(e) => e.stopPropagation()}>
+        <button className={css.btn} onClick={onClose} aria-label={'Close menu'}>
+          <svg width={32} height={32} className={css.close}>
+            <use href={'/symbol-defs.svg#icon-x'} />
+          </svg>
+        </button>
         <Nav onClose={onClose} />
-        {isAuth && user ? <UserBar user={user} onClose={onClose} /> : <AuthNav onClose={onClose} />}
+        {isAuth && user ? (
+          <UserBar user={user} onClose={onClose} />
+        ) : (
+          <AuthNav isAuth={false} onClose={onClose} />
+        )}
       </div>
     </div>
   );

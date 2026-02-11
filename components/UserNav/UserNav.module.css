@@ -1,0 +1,19 @@
+.userNav {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+.userNavHome {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+@media screen and (max-width: 1279px) {
+  .userNav,
+  .userNavHome {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    padding: 16px 0;
+  }
+}
