@@ -1,3 +1,5 @@
+'use client';
+
 import { User } from '@/types/users';
 import { create } from 'zustand';
 

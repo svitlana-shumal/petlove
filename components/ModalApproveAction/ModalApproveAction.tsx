@@ -4,12 +4,18 @@ import { useEffect } from 'react';
 import css from './ModalApproveAction.module.css';
 import Container from '../Container/Container';
 import Image from 'next/image';
+import { useAuthStore } from '@/lib/store/auth';
+import { useRouter } from 'next/navigation';
+import { logoutUser } from '@/lib/clientApi';
+import toast from 'react-hot-toast';
 
 type ModalApproveActionProps = {
-  onConfirm: () => void;
   onCancel: () => void;
 };
-export default function ModalApproveAction({ onConfirm, onCancel }: ModalApproveActionProps) {
+export default function ModalApproveAction({ onCancel }: ModalApproveActionProps) {
+  const { clearIsAuthenticated } = useAuthStore();
+  const router = useRouter();
+
   useEffect(() => {
     const handleEsc = (e: KeyboardEvent) => {
       if (e.key === 'Escape') {
@@ -19,9 +25,23 @@ export default function ModalApproveAction({ onConfirm, onCancel }: ModalApprove
     document.addEventListener('keydown', handleEsc);
     return () => document.removeEventListener('keydown', handleEsc);
   }, [onCancel]);
+
   const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
     if (e.target === e.currentTarget) {
       onCancel();
+    }
+  };
+
+  const handleConfirm = async () => {
+    try {
+      await logoutUser();
+    } catch (error) {
+      if (error instanceof Error) toast.error(error.message || 'Logout failed');
+    } finally {
+      clearIsAuthenticated();
+      localStorage.removeItem('auth');
+      router.push('/');
+      toast.success('You have logged out successfully');
     }
   };
 
@@ -39,7 +59,7 @@ export default function ModalApproveAction({ onConfirm, onCancel }: ModalApprove
           </div>
           <p className={css.text}>Already leaving?</p>
           <div className={css.actions}>
-            <button className={css.confirm} onClick={onConfirm}>
+            <button className={css.confirm} onClick={handleConfirm}>
               Yes
             </button>
             <button className={css.cancel} onClick={onCancel}>

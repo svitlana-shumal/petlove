@@ -64,6 +64,10 @@ export default function LoginForm() {
             type="email"
             placeholder="Email"
             {...register('email')}
+            //   className={`${css.email}
+            //   ${errors.email ? css.error : ''}
+            //   ${!errors.email && emailValue ? css.valid : ''}
+            // `}
             className={`${css.email} ${errors.email ? css.invalid : ''}`}
             aria-invalid={!!errors.email}
           ></input>

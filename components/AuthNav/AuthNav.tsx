@@ -3,17 +3,18 @@
 import Link from 'next/link';
 import css from './AuthNav.module.css';
 import { usePathname } from 'next/navigation';
+import { useAuthStore } from '@/lib/store/auth';
 
 interface AuthNavProp {
   onClose?: () => void;
-  isAuth: boolean;
 }
 
-export default function AuthNav({ onClose, isAuth }: AuthNavProp) {
+export default function AuthNav({ onClose }: AuthNavProp) {
   const pathname = usePathname();
   const isHome = pathname === '/home';
 
-  if (isAuth) return null;
+  const { isAuthenticated } = useAuthStore();
+  if (isAuthenticated) return null;
 
   return (
     <div className={css.auth}>

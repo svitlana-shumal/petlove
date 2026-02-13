@@ -1,14 +1,15 @@
+/* .userNav {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+} */
+/* .userNavHome,
 .userNav {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  gap: 24px;
 }
-.userNavHome {
-  display: flex;
-  align-items: center;
-  gap: 24px;
-}
-@media screen and (max-width: 1279px) {
+@media screen and (min-width: 768px) {
   .userNav,
   .userNavHome {
     flex-direction: column;
@@ -17,3 +18,9 @@
     padding: 16px 0;
   }
 }
+@media screen and (min-width: 1280px) {
+  .userNav,
+  .userNavHome {
+    flex-direction: row;
+  }
+} */

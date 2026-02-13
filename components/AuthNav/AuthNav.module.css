@@ -97,11 +97,11 @@
     font-size: 16px;
     margin: 0;
   }
-}
-@media screen and (min-width: 1280px) {
   .loginHome {
     border: 1px solid var(--text);
   }
+}
+@media screen and (min-width: 1280px) {
   .loginHome:hover {
     border: 1px solid var(--hover);
     background-color: var(--hover);

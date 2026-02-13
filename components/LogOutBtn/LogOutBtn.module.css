@@ -1,4 +1,5 @@
-.logout {
+.logout,
+.log {
   border-radius: 30px;
   padding: 12px 44px;
   font-weight: 700;
@@ -7,16 +8,28 @@
   letter-spacing: -0.03em;
   text-transform: uppercase;
   text-align: center;
-  color: var(--text);
   margin: 0 auto;
   width: 100%;
   max-width: 200px;
-}
-
-.logout {
   background-color: var(--accent);
   color: var(--primary-orange);
 }
 .logout:hover {
   background-color: var(--accent-hover);
+}
+.log {
+  display: none;
+}
+@media screen and (min-width: 768px) {
+  .logout,
+  .log {
+    font-size: 16px;
+    line-height: 1.25;
+    padding: 15px 35px;
+    max-width: 136px;
+    background-color: var(--primary-orange);
+    color: var(--text);
+  }
+}
+@media screen and (min-width: 1280px) {
 }

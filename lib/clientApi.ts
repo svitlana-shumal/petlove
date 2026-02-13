@@ -90,9 +90,9 @@ export async function getCurrentUser() {
   return res.json();
 }
 // users signout
-export async function signOut() {
+export async function logoutUser() {
   try {
-    const res = await fetch(nextServer + '/users/signout', {
+    const res = await fetch('/api/users/signout', {
       method: 'POST',
       credentials: 'include',
     });

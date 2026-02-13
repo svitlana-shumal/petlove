@@ -36,14 +36,23 @@ div.container {
 .menuDef {
   stroke: var(--secondary);
 }
+
 @media screen and (min-width: 768px) {
   .headerHome {
     border-radius: 60px 60px 0 0;
     padding: 23px 32px;
   }
+  .right {
+    gap: 16px;
+  }
+  .authUser {
+    display: flex;
+    gap: 8px;
+  }
   .headerDefault {
     padding: 22px 12px;
   }
+
   .menu {
     width: 36px;
     height: 36px;
@@ -55,14 +64,13 @@ div.container {
     display: none;
   }
   .headerDefault {
-    padding: 23px 64px;
+    padding: 23px 44px;
   }
   .desktopNav {
     display: flex;
     align-items: center;
     flex-direction: row;
     justify-content: space-between;
-    margin-left: auto;
-    gap: 142px;
+    margin: 0 auto;
   }
 }

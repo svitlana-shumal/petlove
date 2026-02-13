@@ -1,21 +1,25 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useAuthStore } from '@/lib/store/auth';
+import { usePathname } from 'next/navigation';
 import css from './Header.module.css';
 import Container from '@/components/Container/Container';
 import MobileMenu from '@/components/MobileMenu/MobileMenu';
-import Logo from '../Logo/Logo';
+import Logo from '@/components/Logo/Logo';
 import Nav from '@/components/Nav/Nav';
 import AuthNav from '@/components/AuthNav/AuthNav';
-import { usePathname } from 'next/navigation';
-import { useAuthStore } from '@/lib/store/auth';
-import UserNav from '@/components/UserNav/UserNav';
+import UserBar from '@/components/UserBar/UserBar';
+import LogOutBtn from '@/components/LogOutBtn/LogOutBtn';
+import { useMediaQuery } from '@/hooks/useMediaQuery';
 
 export default function Header() {
   const pathname = usePathname();
   const isHome = pathname === '/home';
-  const { isAuthenticated } = useAuthStore();
   const [isOpen, setIsOpen] = useState(false);
+  const { user } = useAuthStore();
+
+  const isMobile = useMediaQuery('(max-width: 767px)');
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : 'auto';
@@ -32,14 +36,17 @@ export default function Header() {
           </div>
           <nav className={css.desktopNav}>
             <Nav onClose={() => setIsOpen(false)} />
-            {isAuthenticated ? (
-              <UserNav onClose={() => setIsOpen(false)} />
-            ) : (
-              <AuthNav isAuth={isAuthenticated} onClose={() => setIsOpen(false)} />
-            )}
           </nav>
 
           <div className={css.right}>
+            {user ? (
+              <div className={css.authUser}>
+                {!isMobile && <LogOutBtn />}
+                <UserBar onClose={() => setIsOpen(false)} />
+              </div>
+            ) : (
+              !isMobile && <AuthNav onClose={() => setIsOpen(false)} />
+            )}
             <button
               className={isHome ? css.menu : css.menuDef}
               onClick={toggleMenu}
@@ -50,8 +57,7 @@ export default function Header() {
               </svg>
             </button>
           </div>
-
-          {isOpen && <MobileMenu isAuth={isAuthenticated} onClose={() => setIsOpen(false)} />}
+          {isOpen && <MobileMenu onClose={() => setIsOpen(false)} />}
         </section>
       </header>
     </Container>

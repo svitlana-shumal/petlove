@@ -3,14 +3,19 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import css from './UserBar.module.css';
-import { User } from '@/types/users';
+import { useAuthStore } from '@/lib/store/auth';
+import { usePathname } from 'next/navigation';
 
 interface UserBarProp {
-  user: User;
-  onClose: () => void;
+  onClose?: () => void;
 }
 
-export default function UserBar({ user, onClose }: UserBarProp) {
+export default function UserBar({ onClose }: UserBarProp) {
+  const pathname = usePathname();
+  const isHome = pathname === '/home';
+  const { user, isAuthenticated } = useAuthStore();
+
+  if (!isAuthenticated || !user) return null;
   return (
     <div className={css.userBar}>
       <Link href="/profile" className={css.user} onClick={onClose}>
@@ -21,7 +26,7 @@ export default function UserBar({ user, onClose }: UserBarProp) {
           height={40}
           className={css.avatar}
         />
-        <span className={css.name}>{user.name}</span>
+        <span className={isHome ? css.nameHome : css.name}>{user.name}</span>
       </Link>
     </div>
   );
