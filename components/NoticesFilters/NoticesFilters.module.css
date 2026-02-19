@@ -1,0 +1,116 @@
+.filters {
+  border-radius: 30px;
+  padding: 20px;
+  background-color: var(--accent);
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+.contType {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: row;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.selectWrapper {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+}
+
+.select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border-radius: 30px;
+  padding: 12px 67px 12px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--secondary);
+  background-color: var(--text);
+  border: none;
+  cursor: pointer;
+  stroke-width: 1.5px;
+  stroke: var(--secondary);
+}
+
+.select option {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: column;
+  gap: 8px;
+  border-radius: 15px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.28;
+  letter-spacing: -0.03em;
+  color: rgba(38, 38, 38, 0.6);
+}
+.iconToggle {
+  position: absolute;
+  right: 15px;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+}
+
+/* location */
+.selectType {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  border-radius: 30px;
+  padding: 12px 230px 12px 12px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--secondary);
+  background-color: var(--text);
+  border: none;
+  cursor: pointer;
+  stroke-width: 1.5px;
+  stroke: var(--secondary);
+}
+
+.sort {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+.radio {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 30px;
+  padding: 10px 16px;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.28;
+  letter-spacing: -0.03em;
+  background-color: var(--text);
+  color: var(--secondary);
+  cursor: pointer;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+.radio input {
+  display: none;
+}
+.active {
+  background-color: var(--primary-orange);
+  color: var(--text);
+}
+.btnDefault {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.btnDefault svg {
+  stroke-width: 1.5px;
+  fill: none;
+  stroke: currentColor;
+}

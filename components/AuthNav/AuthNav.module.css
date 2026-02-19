@@ -4,43 +4,6 @@
   align-items: center;
   gap: 8px;
 }
-/* .loginHome {
-  border-radius: 30px;
-  font-weight: 700;
-  padding: 15px 35px;
-  font-size: 16px;
-  line-height: 1.28;
-  letter-spacing: -0.03em;
-  text-transform: uppercase;
-  text-align: center;
-  color: var(--text);
-  margin: 0 auto;
-  width: 100%;
-  max-width: 200px;
-  border: 1px solid var(--text);
-}
-.registerHome {
-  padding: 15px 20px;
-  font-size: 16px;
-  border-radius: 30px;
-  font-weight: 700;
-  line-height: 1.28;
-  letter-spacing: -0.03em;
-  text-transform: uppercase;
-  text-align: center;
-  color: var(--primary-orange);
-  margin: 0 auto;
-  width: 100%;
-  max-width: 200px;
-  background-color: var(--accent);
-}
-.loginHome:hover {
-  border: 1px solid var(--hover);
-  background-color: var(--hover);
-}
-.registerHome:hover {
-  background-color: var(--accent-hover);
-} */
 .login,
 .loginHome,
 .register,
@@ -68,7 +31,9 @@
   background-color: var(--accent);
   color: var(--primary-orange);
 }
-
+.login {
+  border: 1px solid rgba(255, 255, 255, 0.5);
+}
 .login:hover,
 .loginHome:hover {
   background-color: var(--hover);

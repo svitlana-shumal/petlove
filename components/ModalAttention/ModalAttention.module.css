@@ -1,0 +1,105 @@
+.backdrop {
+  background-color: rgba(0, 0, 0, 0.4);
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  padding: 20px;
+}
+.modal {
+  background-color: var(--text);
+  border-radius: 30px;
+  padding: 40px 20px;
+  max-width: 335px;
+  width: 100%;
+  position: relative;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.close {
+  position: absolute;
+  stroke-width: 2px;
+  stroke: var(--secondary);
+  top: 20px;
+  right: 20px;
+}
+.imageCont {
+  display: flex;
+  padding: 18px;
+  border-radius: 100%;
+  background-color: var(--accent);
+  width: 80px;
+  height: 80px;
+  margin: 0 auto;
+}
+.title {
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--primary-orange);
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.desc {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.28;
+  letter-spacing: -0.02em;
+  text-align: center;
+  color: var(--secondary);
+}
+.auth {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: row;
+  gap: 8px;
+  margin-top: 24px;
+}
+.login {
+  border-radius: 30px;
+  padding: 12px 48px;
+  background-color: var(--primary-orange);
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.28;
+  letter-spacing: -0.03em;
+  color: var(--text);
+}
+.register {
+  border-radius: 30px;
+  padding: 12px 24px;
+  background-color: var(--accent);
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.28;
+  letter-spacing: -0.03em;
+  color: var(--primary-orange);
+}
+.login:hover {
+  background-color: var(--hover);
+}
+.register:hover {
+  background-color: var(--accent-hover);
+}
+@media screen and (min-width: 768px) {
+  .backdrop {
+    padding: 0 150px;
+  }
+  .modal {
+    padding: 60px 60px;
+    max-width: 466px;
+  }
+  .auth {
+    margin-top: 28px;
+  }
+  .login,
+  .register {
+    font-size: 16px;
+    line-height: 1.25;
+  }
+}

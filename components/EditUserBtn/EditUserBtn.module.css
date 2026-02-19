@@ -1,0 +1,12 @@
+.btnEdit {
+  border-radius: 30px;
+  padding: 10px;
+  width: 38px;
+  height: 38px;
+  background-color: var(--accent);
+}
+.edit {
+  stroke-width: 1.5px;
+  fill: transparent;
+  stroke: var(--primary-orange);
+}

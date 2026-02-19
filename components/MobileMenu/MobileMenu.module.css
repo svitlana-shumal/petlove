@@ -7,18 +7,24 @@
   align-items: center;
 }
 
+.menuHome,
 .menu {
   position: relative;
   width: 90%;
   max-width: 218px;
   height: 100%;
-  background-color: var(--text);
   padding: 40px 20px;
   z-index: 999;
   animation: slideDown 0.3s ease;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+}
+.menuHome {
+  background-color: var(--text);
+}
+.menu {
+  background-color: var(--primary-orange);
 }
 @keyframes slideDown {
   from {
@@ -39,8 +45,13 @@
   align-self: end;
   stroke: var(--secondary);
 }
+.closeBtn {
+  align-self: end;
+  stroke: var(--text);
+}
 @media screen and (min-width: 768px) {
-  .menu {
+  .menu,
+  .menuHome {
     min-width: 374px;
     padding: 39px 49px 40px;
   }

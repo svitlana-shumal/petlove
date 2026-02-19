@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import css from './SearchField.module.css';
 
 interface SearchFieldProp {
@@ -10,17 +10,20 @@ interface SearchFieldProp {
 
 export default function SearchField({ onSearch, placeholder = 'Search' }: SearchFieldProp) {
   const [query, setQuery] = useState('');
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  const handleSubmit = (
-    e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>
-  ) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (query.trim()) {
       onSearch(query.trim());
     }
   };
 
-  const handleClear = () => setQuery('');
+  const handleClear = () => {
+    setQuery('');
+    onSearch('');
+    inputRef.current?.focus();
+  };
 
   return (
     <form className={css.searchCont} onSubmit={handleSubmit}>
@@ -31,6 +34,7 @@ export default function SearchField({ onSearch, placeholder = 'Search' }: Search
         className={css.input}
         value={query}
         onChange={(e) => setQuery(e.target.value)}
+        aria-label="Search query"
       />
       <button className={css.inputBtn} type="submit" aria-label="Search">
         <svg width={18} height={18}>
@@ -42,7 +46,7 @@ export default function SearchField({ onSearch, placeholder = 'Search' }: Search
           className={css.clearBtn}
           type="button"
           onClick={handleClear}
-          aria-label="Clear search"
+          aria-label="Clear search query"
         >
           <svg width={18} height={18}>
             <use href="/symbol-defs.svg#icon-x" />

@@ -11,12 +11,12 @@ export default function LogOutBtn() {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   return (
-    <div className={css.contLogout}>
+    <>
       <button className={isHome ? css.log : css.logout} onClick={() => setIsModalOpen(true)}>
         Log out
       </button>
 
       {isModalOpen && <ModalApproveAction onCancel={() => setIsModalOpen(false)} />}
-    </div>
+    </>
   );
 }

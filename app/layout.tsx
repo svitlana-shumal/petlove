@@ -27,6 +27,7 @@ export default function RootLayout({
       <body className={`${manrope.variable}`}>
         <Header />
         <Suspense fallback={<Loader />}>{children}</Suspense>
+        <div id="modal-root"></div>
         <Toaster position="top-right" />
       </body>
     </html>

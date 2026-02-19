@@ -3,7 +3,7 @@
 //   avatar?: string | null;
 // }
 
-import { Pet } from './pet';
+import { Notice, Pet } from './notices';
 
 export interface Register {
   name: string;
@@ -22,8 +22,8 @@ export interface LoginValue {
   password: string;
 }
 export type User = {
-  _id: string;
-  email: string;
+  _id?: string;
+  email?: string;
   name?: string;
   avatar?: string | null;
   phone?: string;
@@ -34,23 +34,20 @@ export type User = {
   createdAt?: Date;
   updatedAt?: Date;
 };
-export type Notice = {
-  _id: string;
-  species: string;
-  category: string;
-  price?: string;
-  title: string;
-  name: string;
-  birthday: string;
-  sex: string;
-  imgURL: string;
-  popularity: number;
-  comment: string;
-};
 
-export type NoticeResponse = {
-  results: Notice[];
-  page: number;
-  perPage: number;
-  totalPages: number;
+export interface EditUser {
+  name?: string;
+  email?: string;
+  avatar?: string | null;
+  phone?: string;
+}
+
+export type EditUserResponse = {
+  _id: string;
+  email?: string;
+  name?: string;
+  avatar?: string | null;
+  phone?: string;
+  token?: string;
+  noticesViewed?: Notice[];
 };

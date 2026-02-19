@@ -15,6 +15,7 @@ export default function Pagination({ currentPage, totalPages, onPageChange }: Pa
   if (!totalPages || totalPages <= 1) return null;
 
   const pages: (number | string)[] = [];
+
   if (totalPages <= 3) {
     for (let i = 1; i <= totalPages; i++) {
       pages.push(i);
@@ -41,74 +42,74 @@ export default function Pagination({ currentPage, totalPages, onPageChange }: Pa
         pages.push('...');
       }
     }
-
-    return (
-      <nav className={css.pagination} aria-label="Pagination">
-        <button
-          onClick={() => onPageChange(1)}
-          disabled={currentPage === 1}
-          className={css.circle}
-          aria-label="First page"
-        >
-          <svg width={20} height={20} className={css.right}>
-            <use href="/symbol-defs.svg#icon-left" />
-          </svg>
-          <svg width={20} height={20} className={css.icon}>
-            <use href="/symbol-defs.svg#icon-left" />
-          </svg>
-        </button>
-
-        <button
-          onClick={() => onPageChange(currentPage - 1)}
-          disabled={currentPage === 1}
-          className={css.circle}
-        >
-          <svg width={20} height={20} className={css.icon}>
-            <use href="/symbol-defs.svg#icon-left" />
-          </svg>
-        </button>
-
-        <div className={css.numbers}>
-          {pages.map((p, idx) =>
-            typeof p === 'number' ? (
-              <button
-                key={idx}
-                onClick={() => onPageChange(p)}
-                disabled={p === currentPage}
-                className={`{css.circle} ${p === currentPage ? css.active : ''}`}
-              >
-                {p}
-              </button>
-            ) : (
-              <span key={idx} className={css.ellipsis}>
-                {p}
-              </span>
-            )
-          )}
-        </div>
-        <button
-          onClick={() => onPageChange(currentPage + 1)}
-          disabled={currentPage === totalPages}
-          className={css.circle}
-        >
-          <svg width={20} height={20} className={css.icon}>
-            <use href="/symbol-defs.svg#icon-rigth" />
-          </svg>
-        </button>
-
-        <button
-          onClick={() => onPageChange(totalPages)}
-          disabled={currentPage === totalPages}
-          className={css.circle}
-        >
-          <svg width={20} height={20} className={css.right}>
-            <use href="/symbol-defs.svg#icon-rigth" />
-          </svg>
-          <svg width={20} height={20} className={css.icon}>
-            <use href="/symbol-defs.svg#icon-rigth" />
-          </svg>
-        </button>
-      </nav>
-    );
   }
+
+  return (
+    <nav className={css.pagination} aria-label="Pagination">
+      <button
+        onClick={() => onPageChange(1)}
+        disabled={currentPage === 1}
+        className={css.circle}
+        aria-label="First page"
+      >
+        <svg width={20} height={20} className={css.right}>
+          <use href="/symbol-defs.svg#icon-left" />
+        </svg>
+        <svg width={20} height={20} className={css.icon}>
+          <use href="/symbol-defs.svg#icon-left" />
+        </svg>
+      </button>
+
+      <button
+        onClick={() => onPageChange(currentPage - 1)}
+        disabled={currentPage === 1}
+        className={css.circle}
+      >
+        <svg width={20} height={20} className={css.icon}>
+          <use href="/symbol-defs.svg#icon-left" />
+        </svg>
+      </button>
+
+      <div className={css.numbers}>
+        {pages.map((p, idx) =>
+          typeof p === 'number' ? (
+            <button
+              key={idx}
+              onClick={() => onPageChange(p)}
+              disabled={p === currentPage}
+              className={`${css.circle} ${p === currentPage ? css.active : ''}`}
+            >
+              {p}
+            </button>
+          ) : (
+            <span key={idx} className={css.ellipsis}>
+              {p}
+            </span>
+          )
+        )}
+      </div>
+      <button
+        onClick={() => onPageChange(currentPage + 1)}
+        disabled={currentPage === totalPages}
+        className={css.circle}
+      >
+        <svg width={20} height={20} className={css.icon}>
+          <use href="/symbol-defs.svg#icon-rigth" />
+        </svg>
+      </button>
+
+      <button
+        onClick={() => onPageChange(totalPages)}
+        disabled={currentPage === totalPages}
+        className={css.circle}
+      >
+        <svg width={20} height={20} className={css.right}>
+          <use href="/symbol-defs.svg#icon-rigth" />
+        </svg>
+        <svg width={20} height={20} className={css.icon}>
+          <use href="/symbol-defs.svg#icon-rigth" />
+        </svg>
+      </button>
+    </nav>
+  );
 }

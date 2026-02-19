@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
-  padding: 20px 0 25px;
+  /* padding: 20px 0 25px; */
   position: relative;
 }
 .input {
@@ -15,7 +15,7 @@
   line-height: 1.28;
   letter-spacing: -0.03em;
   color: var(--input);
-  background-color: transparent;
+  background-color: var(--text);
 }
 .input:hover,
 .input:focus {
