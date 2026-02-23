@@ -1,32 +1,3 @@
-// import { isAxiosError } from 'axios';
-// import { NextRequest, NextResponse } from 'next/server';
-// import { api } from '../api';
-
-// export async function GET(request: NextRequest) {
-//   try {
-//     const { searchParams } = new URL(request.url);
-
-//     const response = await api.get('/notices', {
-//       params: Object.fromEntries(searchParams),
-//     });
-
-//     return NextResponse.json(response.data, { status: response.status });
-//   } catch (error) {
-//     if (isAxiosError(error)) {
-//       if (error.response?.status === 404) {
-//         return NextResponse.json({ error: 'Notices service not found' }, { status: 404 });
-//       }
-
-//       return NextResponse.json(
-//         { error: error.message, response: error.response?.data },
-//         { status: error.response?.status ?? 500 }
-//       );
-//     }
-
-//     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
-//   }
-// }
-
 import { NextRequest, NextResponse } from 'next/server';
 import { api } from '../api';
 import { isAxiosError } from 'axios';

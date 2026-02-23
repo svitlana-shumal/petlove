@@ -5,21 +5,28 @@
   margin-top: 40px;
   margin-bottom: 40px;
 }
+
 .contType {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   align-items: center;
   justify-content: flex-start;
-  flex-direction: row;
   gap: 12px;
-  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid rgba(38, 38, 38, 0.1);
+}
+.contCategor {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: row;
+  gap: 8px;
 }
 .selectWrapper {
   position: relative;
   display: inline-flex;
   align-items: center;
 }
-
 .select {
   appearance: none;
   -webkit-appearance: none;
@@ -35,19 +42,17 @@
   stroke-width: 1.5px;
   stroke: var(--secondary);
 }
-
 .select option {
-  display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  flex-direction: column;
-  gap: 8px;
-  border-radius: 15px;
-  font-weight: 500;
-  font-size: 14px;
-  line-height: 1.28;
-  letter-spacing: -0.03em;
+  border-radius: 30px;
+  background-color: var(--text);
   color: rgba(38, 38, 38, 0.6);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 12px;
+}
+.select option:checked {
+  background-color: var(--primary-orange);
+  color: var(--text);
 }
 .iconToggle {
   position: absolute;
@@ -113,4 +118,32 @@
   stroke-width: 1.5px;
   fill: none;
   stroke: currentColor;
+}
+/* tablet */
+@media screen and (min-width: 768px) {
+  .contType {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 16px;
+  }
+  .contCategor {
+    gap: 16px;
+  }
+  .select {
+    padding: 14px 89px 14px 14px;
+  }
+  .selectType {
+    padding: 14px 123px 14px 14px;
+  }
+  .select,
+  .selectType {
+    font-size: 16px;
+    line-height: 1.25;
+  }
+  .radio {
+    font-size: 16px;
+    line-height: 1.25;
+  }
+}
+@media screen and (min-width: 1280px) {
 }

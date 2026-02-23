@@ -6,9 +6,9 @@ import Title from '@/components/Title/Title';
 import Pagination from '@/components/Pagination/Pagination';
 import NoticesFilter from '@/components/NoticesFilters/NoticesFilters';
 import NoticesList from '@/components/NoticesList/NoticesList';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { getNotices } from '@/lib/clientApi';
-import { NoticeDetails } from '@/types/notices';
+import { FiltersState, NoticeDetails } from '@/types/notices';
 
 export default function Notices() {
   const [notices, setNotices] = useState<NoticeDetails[]>([]);
@@ -16,28 +16,58 @@ export default function Notices() {
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false);
 
-  const loadNotices = async (page: number = 1) => {
-    setLoading(true);
-    try {
-      const data = await getNotices({ page, limit: 6 });
-      setNotices(data.results);
-      setPage(data.page);
-      setTotalPages(data.totalPages);
-    } catch (error) {
-      console.error('Error fetching notices:', error);
-      setNotices([]);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const [filters, setFilters] = useState<FiltersState>({
+    search: '',
+    category: null,
+    sex: null,
+    species: null,
+    locationId: null,
+    sort: null,
+  });
+
+  const loadNotices = useCallback(
+    async (page: number = 1) => {
+      setLoading(true);
+      try {
+        const data = await getNotices({
+          page,
+          limit: 6,
+          keyword: filters.search || undefined,
+          category: filters.category ?? undefined,
+          sex: filters.sex ?? undefined,
+          species: filters.species ?? undefined,
+          locationId: filters.locationId ?? undefined,
+          isPopularitySort: filters.sort === 'popular' ? true : undefined,
+          isPriceSort: filters.sort === 'cheap' || filters.sort === 'expensive' ? true : undefined,
+          isDateSort: filters.sort === 'unpopular' ? true : undefined,
+        });
+        setNotices(data.results);
+        setPage(data.page);
+        setTotalPages(data.totalPages);
+      } catch (error) {
+        console.error('Error fetching notices:', error);
+        setNotices([]);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [filters]
+  );
+
   useEffect(() => {
-    loadNotices();
-  }, []);
+    loadNotices(1);
+  }, [loadNotices]);
 
   return (
     <Container className={css.cont}>
       <Title text="Find your favorite pet" />
-      <NoticesFilter onFilterChange={(filters) => console.log(filters)} />
+      <NoticesFilter
+        onFilterChange={(newFilters) => {
+          setFilters((prev) =>
+            JSON.stringify(prev) === JSON.stringify(newFilters) ? prev : newFilters
+          );
+        }}
+      />
       <NoticesList notices={notices} loading={loading} />
       <Pagination
         currentPage={page}

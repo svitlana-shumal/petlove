@@ -7,12 +7,16 @@ import { getCategories, getSpecies, getSex, searchCities } from '@/lib/clientApi
 import { Category, City, FiltersState, Sex, Species } from '@/types/notices';
 import AsyncSelect from 'react-select/async';
 
-import { components } from 'react-select';
+import { components, DropdownIndicatorProps, GroupBase } from 'react-select';
 
 interface NoticesFiltersProps {
   onFilterChange: (filters: FiltersState) => void;
 }
-
+interface LocationOption {
+  value: string;
+  label: string;
+  data: City;
+}
 export default function NoticesFilters({ onFilterChange }: NoticesFiltersProps) {
   const [openCategory, setOpenCategory] = useState(false);
   const [openSex, setOpenSex] = useState(false);
@@ -22,7 +26,7 @@ export default function NoticesFilters({ onFilterChange }: NoticesFiltersProps) 
   const [category, setCategory] = useState<Category | null>(null);
   const [sex, setSex] = useState<Sex | null>(null);
   const [species, setSpecies] = useState<Species | null>(null);
-  const [location, setLocation] = useState<City | null>(null);
+  const [locationId, setLocationId] = useState<string | null>(null);
   const [sort, setSort] = useState<'popular' | 'unpopular' | 'cheap' | 'expensive' | null>(null);
   const [categoriesOptions, setCategoriesOptions] = useState<{ value: string; label: string }[]>(
     []
@@ -41,7 +45,7 @@ export default function NoticesFilters({ onFilterChange }: NoticesFiltersProps) 
     })();
   }, []);
 
-  const loadLocations = async (inputValue: string) => {
+  const loadLocations = async (inputValue: string): Promise<LocationOption[]> => {
     if (!inputValue) return [];
     const locations: City[] = await searchCities(inputValue);
     return locations.map((loc) => ({
@@ -52,8 +56,8 @@ export default function NoticesFilters({ onFilterChange }: NoticesFiltersProps) 
   };
 
   useEffect(() => {
-    onFilterChange({ search, category, sex, species, location, sort });
-  }, [search, category, sex, species, location, sort, onFilterChange]);
+    onFilterChange({ search, category, sex, species, locationId, sort });
+  }, [search, category, sex, species, locationId, sort, onFilterChange]);
 
   // const handleReset = () => {
   //   const defaults = {
@@ -61,19 +65,21 @@ export default function NoticesFilters({ onFilterChange }: NoticesFiltersProps) 
   //     category: null,
   //     sex: null,
   //     species: null,
-  //     location: null,
+  //     locationId: null,
   //     sort: 'popular',
   //   };
   //   setSearch(defaults.search);
   //   setCategory(defaults.category);
   //   setSex(defaults.sex);
   //   setSpecies(defaults.species);
-  //   setLocation(defaults.location);
+  //   setLocationId(defaults.locationId);
   //   setSort(defaults.sort);
   //   onFilterChange(defaults);
   // };
 
-  const DropdownIndicator = (props: any) => {
+  const DropdownIndicator = (
+    props: DropdownIndicatorProps<LocationOption, false, GroupBase<LocationOption>>
+  ) => {
     const isOpen = props.selectProps.menuIsOpen;
     return (
       <components.DropdownIndicator {...props}>
@@ -87,64 +93,65 @@ export default function NoticesFilters({ onFilterChange }: NoticesFiltersProps) 
   return (
     <div className={css.filters}>
       <div className={css.contType}>
-        <SearchField onSearch={setSearch} placeholder="Search" />
+        <SearchField onSearch={setSearch} placeholder="Search" className={css.search} />
 
-        <div className={css.selectWrapper}>
-          <select
-            value={category ?? ''}
-            onChange={(e) => setCategory((e.target.value || null) as Category | null)}
-            className={css.select}
-            onFocus={() => setOpenCategory(true)}
-            onBlur={() => setOpenCategory(false)}
-          >
-            <option value="">Category</option>
-            {categoriesOptions.map((opt) => (
-              <option key={opt.value} value={opt.value}>
-                {opt.label}
-              </option>
-            ))}
-          </select>
-          <span className={css.iconToggle}>
-            <svg width={18} height={18}>
-              <use
-                href={
-                  openCategory
-                    ? '/symbol-defs.svg#icon-chevron-up'
-                    : '/symbol-defs.svg#icon-chevron-down'
-                }
-              />
-            </svg>
-          </span>
+        <div className={css.contCategor}>
+          <div className={css.selectWrapper}>
+            <select
+              value={category ?? ''}
+              onChange={(e) => setCategory((e.target.value || null) as Category | null)}
+              className={css.select}
+              onFocus={() => setOpenCategory(true)}
+              onBlur={() => setOpenCategory(false)}
+            >
+              <option value="">Category</option>
+              {categoriesOptions.map((opt) => (
+                <option key={opt.value} value={opt.value}>
+                  {opt.label}
+                </option>
+              ))}
+            </select>
+            <span className={css.iconToggle}>
+              <svg width={18} height={18}>
+                <use
+                  href={
+                    openCategory
+                      ? '/symbol-defs.svg#icon-chevron-up'
+                      : '/symbol-defs.svg#icon-chevron-down'
+                  }
+                />
+              </svg>
+            </span>
+          </div>
+
+          <div className={css.selectWrapper}>
+            <select
+              value={sex ?? ''}
+              onChange={(e) => setSex((e.target.value || null) as Sex | null)}
+              className={css.select}
+              onFocus={() => setOpenSex(true)}
+              onBlur={() => setOpenSex(false)}
+            >
+              <option value="">By gender</option>
+              {sexOptions.map((opt) => (
+                <option key={opt.value} value={opt.value}>
+                  {opt.label}
+                </option>
+              ))}
+            </select>
+            <span className={css.iconToggle}>
+              <svg width={18} height={18}>
+                <use
+                  href={
+                    openSex
+                      ? '/symbol-defs.svg#icon-chevron-up'
+                      : '/symbol-defs.svg#icon-chevron-down'
+                  }
+                />
+              </svg>
+            </span>
+          </div>
         </div>
-
-        <div className={css.selectWrapper}>
-          <select
-            value={sex ?? ''}
-            onChange={(e) => setSex((e.target.value || null) as Sex | null)}
-            className={css.select}
-            onFocus={() => setOpenSex(true)}
-            onBlur={() => setOpenSex(false)}
-          >
-            <option value="">By gender</option>
-            {sexOptions.map((opt) => (
-              <option key={opt.value} value={opt.value}>
-                {opt.label}
-              </option>
-            ))}
-          </select>
-          <span className={css.iconToggle}>
-            <svg width={18} height={18}>
-              <use
-                href={
-                  openSex
-                    ? '/symbol-defs.svg#icon-chevron-up'
-                    : '/symbol-defs.svg#icon-chevron-down'
-                }
-              />
-            </svg>
-          </span>
-        </div>
-
         <div className={css.selectWrapper}>
           <select
             value={species ?? ''}
@@ -173,18 +180,19 @@ export default function NoticesFilters({ onFilterChange }: NoticesFiltersProps) 
           </span>
         </div>
 
-        <AsyncSelect
+        <AsyncSelect<LocationOption, false>
           cacheOptions
           loadOptions={loadLocations}
           defaultOptions
-          onChange={(opt) => setLocation(opt?.data ?? null)}
+          onChange={(opt) => setLocationId(opt?.value ?? null)}
           placeholder="Location"
           classNamePrefix="location"
           components={{ DropdownIndicator }}
           styles={{
             control: (base) => ({
               ...base,
-              minHeight: 44,
+              width: 295,
+              minHeight: 42,
               borderRadius: 30,
               border: 'none',
               boxShadow: 'none',
@@ -207,8 +215,8 @@ export default function NoticesFilters({ onFilterChange }: NoticesFiltersProps) 
 
             dropdownIndicator: (base) => ({
               ...base,
-              stroke: 'black',
-              fill: 'white',
+              stroke: 'var(--secondary)',
+              fill: 'var(--text)',
             }),
             indicatorsContainer: (base) => ({ ...base, paddingRight: 4 }),
 
@@ -218,8 +226,6 @@ export default function NoticesFilters({ onFilterChange }: NoticesFiltersProps) 
           }}
         />
       </div>
-
-      {/* <span className={css.drop}></span> */}
 
       <div className={css.sort}>
         {(['popular', 'unpopular', 'cheap', 'expensive'] as const).map((option) => (

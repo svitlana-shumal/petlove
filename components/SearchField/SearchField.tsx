@@ -6,6 +6,7 @@ import css from './SearchField.module.css';
 interface SearchFieldProp {
   onSearch: (query: string) => void;
   placeholder?: string;
+  className?: string;
 }
 
 export default function SearchField({ onSearch, placeholder = 'Search' }: SearchFieldProp) {

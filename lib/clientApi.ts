@@ -95,11 +95,18 @@ export async function getAllLocations(): Promise<City[]> {
 }
 
 // location search
+
 export async function searchCities(keyword: string): Promise<City[]> {
-  const { data } = await nextServer.get<City[]>('/cities', {
-    params: { keyword },
-  });
-  return data;
+  if (keyword.length < 3) return [];
+  try {
+    const { data } = await nextServer.get<City[]>('/cities', {
+      params: { keyword },
+    });
+    return data;
+  } catch (error) {
+    console.error('Error fetching cities:', error);
+    return [];
+  }
 }
 
 // friends

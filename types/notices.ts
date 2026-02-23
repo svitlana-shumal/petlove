@@ -39,15 +39,13 @@ export type NoticesQueryParams = {
   keyword?: string;
   category?: Category;
   species?: Species;
+  sex?: Sex;
   locationId?: string;
-
-  buDate?: boolean;
-  byPopularity?: boolean;
-  byPrice?: boolean;
-
+  isDateSort?: boolean;
+  isPriceSort?: boolean;
+  isPopularitySort?: boolean;
   page?: number;
   limit?: number;
-  sex?: Sex;
 };
 export type NoticeResponse = {
   results: NoticeDetails[];
@@ -92,7 +90,7 @@ export type NoticeDetails = {
   isFavorite: boolean;
 };
 
-export type Category = 'Sell' | 'Free' | 'Lost' | 'Found';
+export type Category = 'sell' | 'free' | 'lost' | 'found';
 
 export type Sex = 'unknown' | 'female' | 'male' | 'multiple';
 
@@ -120,11 +118,17 @@ export type City = {
   countyEn: string;
 };
 
+export interface CitiesQueryParams {
+  keyword: string;
+  page?: number;
+  limit?: number;
+}
+
 export interface FiltersState {
   search: string;
-  category: Category;
-  sex: Sex;
-  species: Species;
-  location: City;
-  sort: 'popularity' | 'price';
+  category: Category | null;
+  sex: Sex | null;
+  species: Species | null;
+  locationId: string | null;
+  sort: 'popular' | 'unpopular' | 'cheap' | 'expensive' | null;
 }
