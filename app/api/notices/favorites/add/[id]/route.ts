@@ -2,13 +2,11 @@ import { NextRequest, NextResponse } from 'next/server';
 import { api } from '../../../../api';
 import { isAxiosError } from 'axios';
 
-type Props = { params: { id: string } };
-
 type ApiErrorResponse = { message?: string; error?: string };
 
-export async function POST(request: NextRequest, { params }: Props) {
+export async function POST(request: NextRequest, context: { params: { id: string } }) {
   try {
-    const { id } = params;
+    const { id } = context.params;
     const authHeader = request.headers.get('authorization');
     const token = authHeader?.replace('Bearer ', '');
 

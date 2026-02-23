@@ -181,6 +181,7 @@ export default function NoticesFilters({ onFilterChange }: NoticesFiltersProps) 
         </div>
 
         <AsyncSelect<LocationOption, false>
+          instanceId="location-select"
           cacheOptions
           loadOptions={loadLocations}
           defaultOptions
