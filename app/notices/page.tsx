@@ -25,6 +25,21 @@ export default function Notices() {
     sort: null,
   });
 
+  function sortNotices(notices: NoticeDetails[], sort: FiltersState['sort']) {
+    switch (sort) {
+      case 'popular':
+        return [...notices].sort((a, b) => (b.popularity ?? 0) - (a.popularity ?? 0));
+      case 'unpopular':
+        return [...notices].sort((a, b) => (a.popularity ?? 0) - (b.popularity ?? 0));
+      case 'cheap':
+        return [...notices].sort((a, b) => (a.price ?? 0) - (b.price ?? 0));
+      case 'expensive':
+        return [...notices].sort((a, b) => (b.price ?? 0) - (a.price ?? 0));
+      default:
+        return notices;
+    }
+  }
+
   const loadNotices = useCallback(
     async (page: number = 1) => {
       setLoading(true);
@@ -37,11 +52,9 @@ export default function Notices() {
           sex: filters.sex ?? undefined,
           species: filters.species ?? undefined,
           locationId: filters.locationId ?? undefined,
-          isPopularitySort: filters.sort === 'popular' ? true : undefined,
-          isPriceSort: filters.sort === 'cheap' || filters.sort === 'expensive' ? true : undefined,
-          isDateSort: filters.sort === 'unpopular' ? true : undefined,
         });
-        setNotices(data.results);
+        const sortedResults = sortNotices(data.results, filters.sort);
+        setNotices(sortedResults);
         setPage(data.page);
         setTotalPages(data.totalPages);
       } catch (error) {

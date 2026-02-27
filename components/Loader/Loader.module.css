@@ -1,7 +1,7 @@
 .wrapper {
   position: relative;
-  width: 100vw;
-  height: 100vh;
+  /* width: 100vw;
+  height: 100vh; */
   overflow: hidden;
 }
 .bg {
@@ -17,8 +17,8 @@
   text-align: center;
 }
 .percent {
-  /* width: 292px;
-  height: 292px; */
+  width: 292px;
+  height: 292px;
   font-size: 50px;
   font-weight: 700;
   color: var(--text);
@@ -37,6 +37,7 @@
     transform: scale(1);
   }
 }
+
 .logo {
   display: flex;
   align-items: flex-end;

@@ -53,44 +53,43 @@ export default function NoticesItem({ notice }: NoticesItemProp) {
   return (
     <>
       <li className={css.card}>
-        <div className={css.contCard}>
-          <Image
-            src={notice.imgURL}
-            alt={notice.name}
-            width={287}
-            height={178}
-            className={css.image}
-          />
-          <div className={css.titleCont}>
-            <h3 className={css.subtitle}>{notice.title}</h3>
-            <p className={css.popularity}>
-              <svg width={16} height={16} className={css.icon}>
-                <use href="/symbol-defs.svg#icon-star" />
-              </svg>
-              {notice.popularity}
-            </p>
-          </div>
-          <ul className={css.details}>
-            <li>
-              <p className={css.desc}>Name</p> <p className={css.value}>{notice.name}</p>
-            </li>
-            <li>
-              <p className={css.desc}>Birthday</p>
-              <p className={css.value}>{formattedBirthday}</p>
-            </li>
-            <li>
-              <p className={css.desc}>Sex</p> <p className={css.value}>{notice.sex}</p>
-            </li>
-            <li>
-              <p className={css.desc}>Species</p> <p className={css.value}>{notice.species}</p>
-            </li>
-            <li>
-              <p className={css.desc}>Category</p>
-              <p className={css.value}>{notice.category}</p>
-            </li>
-          </ul>
-          <p className={css.comment}>{notice.comment}</p>
+        <Image
+          src={notice.imgURL}
+          alt={notice.name}
+          width={287}
+          height={178}
+          className={css.image}
+        />
+        <div className={css.titleCont}>
+          <h3 className={css.subtitle}>{notice.title}</h3>
+          <p className={css.popularity}>
+            <svg width={16} height={16} className={css.icon}>
+              <use href="/symbol-defs.svg#icon-star" />
+            </svg>
+            {notice.popularity}
+          </p>
         </div>
+        <ul className={css.details}>
+          <li>
+            <p className={css.desc}>Name</p> <p className={css.value}>{notice.name}</p>
+          </li>
+          <li>
+            <p className={css.desc}>Birthday</p>
+            <p className={css.value}>{formattedBirthday}</p>
+          </li>
+          <li>
+            <p className={css.desc}>Sex</p> <p className={css.value}>{notice.sex}</p>
+          </li>
+          <li>
+            <p className={css.desc}>Species</p> <p className={css.value}>{notice.species}</p>
+          </li>
+          <li>
+            <p className={css.desc}>Category</p>
+            <p className={css.value}>{notice.category}</p>
+          </li>
+        </ul>
+        <p className={css.comment}>{notice.comment}</p>
+
         <p className={css.price}>{notice.price ? `$${notice.price}` : 'Free'}</p>
         <div className={css.actions}>
           <button className={css.btn} onClick={handleLearnMore}>

@@ -5,34 +5,29 @@ import css from './NoticesFilters.module.css';
 import SearchField from '@/components/SearchField/SearchField';
 import { getCategories, getSpecies, getSex, searchCities } from '@/lib/clientApi';
 import { Category, City, FiltersState, Sex, Species } from '@/types/notices';
+import Select, { DropdownIndicatorProps, GroupBase, SingleValue, StylesConfig } from 'react-select';
 import AsyncSelect from 'react-select/async';
-
-import { components, DropdownIndicatorProps, GroupBase } from 'react-select';
-
+import { components } from 'react-select';
 interface NoticesFiltersProps {
   onFilterChange: (filters: FiltersState) => void;
 }
+type Option = { value: string; label: string };
 interface LocationOption {
   value: string;
   label: string;
   data: City;
 }
 export default function NoticesFilters({ onFilterChange }: NoticesFiltersProps) {
-  const [openCategory, setOpenCategory] = useState(false);
-  const [openSex, setOpenSex] = useState(false);
-  const [openSpecies, setOpenSpecies] = useState(false);
-
   const [search, setSearch] = useState('');
   const [category, setCategory] = useState<Category | null>(null);
   const [sex, setSex] = useState<Sex | null>(null);
   const [species, setSpecies] = useState<Species | null>(null);
   const [locationId, setLocationId] = useState<string | null>(null);
   const [sort, setSort] = useState<'popular' | 'unpopular' | 'cheap' | 'expensive' | null>(null);
-  const [categoriesOptions, setCategoriesOptions] = useState<{ value: string; label: string }[]>(
-    []
-  );
-  const [sexOptions, setSexOptions] = useState<{ value: string; label: string }[]>([]);
-  const [speciesOptions, setSpeciesOptions] = useState<{ value: string; label: string }[]>([]);
+  const [categoriesOptions, setCategoriesOptions] = useState<Option[]>([]);
+  const [sexOptions, setSexOptions] = useState<Option[]>([]);
+  const [speciesOptions, setSpeciesOptions] = useState<Option[]>([]);
+  const [locationValue, setLocationValue] = useState<LocationOption | null>(null);
 
   useEffect(() => {
     (async () => {
@@ -59,35 +54,123 @@ export default function NoticesFilters({ onFilterChange }: NoticesFiltersProps) 
     onFilterChange({ search, category, sex, species, locationId, sort });
   }, [search, category, sex, species, locationId, sort, onFilterChange]);
 
-  // const handleReset = () => {
-  //   const defaults = {
-  //     search: '',
-  //     category: null,
-  //     sex: null,
-  //     species: null,
-  //     locationId: null,
-  //     sort: 'popular',
-  //   };
-  //   setSearch(defaults.search);
-  //   setCategory(defaults.category);
-  //   setSex(defaults.sex);
-  //   setSpecies(defaults.species);
-  //   setLocationId(defaults.locationId);
-  //   setSort(defaults.sort);
-  //   onFilterChange(defaults);
-  // };
+  const handleClear = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setLocationValue(null);
+    setLocationId(null);
+  };
 
-  const DropdownIndicator = (
-    props: DropdownIndicatorProps<LocationOption, false, GroupBase<LocationOption>>
-  ) => {
-    const isOpen = props.selectProps.menuIsOpen;
-    return (
-      <components.DropdownIndicator {...props}>
-        <svg width={18} height={18}>
-          <use href={isOpen ? '/symbol-defs.svg#icon-x' : '/symbol-defs.svg#icon-search'} />
-        </svg>
-      </components.DropdownIndicator>
-    );
+  const LocationDropdownIndicator: React.FC<
+    DropdownIndicatorProps<LocationOption, false, GroupBase<LocationOption>>
+  > = (props) => (
+    <components.DropdownIndicator {...props}>
+      {locationValue && (
+        <button
+          className={css.clearBtn}
+          onClick={handleClear}
+          type="button"
+          aria-label="Clear location"
+        >
+          <svg width={18} height={18} className={css.iconX}>
+            <use href="/symbol-defs.svg#icon-x" />
+          </svg>
+        </button>
+      )}
+      <svg width={18} height={18} className={css.iconSearch}>
+        <use href="/symbol-defs.svg#icon-search" />
+      </svg>
+    </components.DropdownIndicator>
+  );
+
+  const optionStyles: StylesConfig<Option, false> = {
+    control: (base, state) => ({
+      ...base,
+      width: '100%',
+      minHeight: 42,
+      borderRadius: 30,
+      border: state.isFocused ? '1px solid var(--primary-orange)' : '1px solid var(--text)',
+      boxShadow: 'none',
+      backgroundColor: 'var(--text)',
+      '&:hover': { borderColor: 'var(--primary-orange)' },
+    }),
+    menu: (base) => ({
+      ...base,
+      borderRadius: 15,
+      marginTop: 4,
+      color: 'rgba(38, 38, 38, 0.6)',
+      backgroundColor: 'var(--text)',
+      boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+    }),
+    option: (base, state) => ({
+      ...base,
+      padding: '10px 16px',
+      fontSize: 14,
+      fontWeight: 500,
+      backgroundColor: state.isFocused
+        ? 'var(--text)'
+        : state.isSelected
+          ? 'var(--text)'
+          : 'transparent',
+      color: state.isSelected ? 'var(--primary-orange)' : 'var(--grey-text)',
+      cursor: 'pointer',
+    }),
+    placeholder: (base) => ({
+      ...base,
+      fontWeight: 500,
+      fontSize: 14,
+      color: 'var(--secondary)',
+    }),
+    valueContainer: (base) => ({ ...base, padding: '0 16px' }),
+    input: (base) => ({
+      ...base,
+      margin: 0,
+      padding: 0,
+    }),
+    indicatorsContainer: (base) => ({ ...base, paddingRight: 4 }),
+    indicatorSeparator: () => ({ display: 'none' }),
+  };
+
+  const locationStyles: StylesConfig<LocationOption, false> = {
+    control: (base, state) => ({
+      ...base,
+      minHeight: 42,
+
+      borderRadius: 30,
+      border: state.isFocused ? '2px solid var(--primary-orange)' : '1px solid var(--text)',
+      boxShadow: 'none',
+      backgroundColor: 'var(--text)',
+      '&:hover': { borderColor: 'var(--primary-orange)' },
+    }),
+    menu: (base) => ({
+      ...base,
+      borderRadius: 12,
+      marginTop: 4,
+      backgroundColor: 'var(--text)',
+      boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+    }),
+    option: (base, state) => ({
+      ...base,
+      padding: '10px 16px',
+      fontSize: 14,
+      fontWeight: 500,
+      backgroundColor: state.isFocused
+        ? 'var(--primary-orange-light)'
+        : state.isSelected
+          ? 'var(--primary-orange)'
+          : 'transparent',
+      color: state.isSelected ? '#fff' : 'var(--secondary)',
+      cursor: 'pointer',
+    }),
+    placeholder: (base) => ({
+      ...base,
+      fontWeight: 500,
+      fontSize: 14,
+      color: 'var(--secondary)',
+    }),
+    valueContainer: (base) => ({ ...base, paddingLeft: 12 }),
+    indicatorsContainer: (base) => ({ ...base, paddingRight: 4 }),
+    indicatorSeparator: () => ({ display: 'none' }),
   };
 
   return (
@@ -96,138 +179,53 @@ export default function NoticesFilters({ onFilterChange }: NoticesFiltersProps) 
         <SearchField onSearch={setSearch} placeholder="Search" className={css.search} />
 
         <div className={css.contCategor}>
-          <div className={css.selectWrapper}>
-            <select
-              value={category ?? ''}
-              onChange={(e) => setCategory((e.target.value || null) as Category | null)}
-              className={css.select}
-              onFocus={() => setOpenCategory(true)}
-              onBlur={() => setOpenCategory(false)}
-            >
-              <option value="">Category</option>
-              {categoriesOptions.map((opt) => (
-                <option key={opt.value} value={opt.value}>
-                  {opt.label}
-                </option>
-              ))}
-            </select>
-            <span className={css.iconToggle}>
-              <svg width={18} height={18}>
-                <use
-                  href={
-                    openCategory
-                      ? '/symbol-defs.svg#icon-chevron-up'
-                      : '/symbol-defs.svg#icon-chevron-down'
-                  }
-                />
-              </svg>
-            </span>
-          </div>
-
-          <div className={css.selectWrapper}>
-            <select
-              value={sex ?? ''}
-              onChange={(e) => setSex((e.target.value || null) as Sex | null)}
-              className={css.select}
-              onFocus={() => setOpenSex(true)}
-              onBlur={() => setOpenSex(false)}
-            >
-              <option value="">By gender</option>
-              {sexOptions.map((opt) => (
-                <option key={opt.value} value={opt.value}>
-                  {opt.label}
-                </option>
-              ))}
-            </select>
-            <span className={css.iconToggle}>
-              <svg width={18} height={18}>
-                <use
-                  href={
-                    openSex
-                      ? '/symbol-defs.svg#icon-chevron-up'
-                      : '/symbol-defs.svg#icon-chevron-down'
-                  }
-                />
-              </svg>
-            </span>
-          </div>
-        </div>
-        <div className={css.selectWrapper}>
-          <select
-            value={species ?? ''}
-            onChange={(e) => setSpecies((e.target.value || null) as Species | null)}
-            className={css.selectType}
-            onFocus={() => setOpenSpecies(true)}
-            onBlur={() => setOpenSpecies(false)}
-          >
-            <option value="">By type</option>
-            {speciesOptions.map((opt) => (
-              <option key={opt.value} value={opt.value}>
-                {opt.label}
-              </option>
-            ))}
-          </select>
-          <span className={css.iconToggle}>
-            <svg width={18} height={18}>
-              <use
-                href={
-                  openSpecies
-                    ? '/symbol-defs.svg#icon-chevron-up'
-                    : '/symbol-defs.svg#icon-chevron-down'
-                }
-              />
-            </svg>
-          </span>
+          <Select<Option, false>
+            instanceId="category-select"
+            options={[{ value: '', label: 'Show all' }, ...categoriesOptions]}
+            value={category ? { value: category, label: category } : null}
+            onChange={(opt: SingleValue<Option>) =>
+              setCategory(opt?.value ? (opt.value as Category) : null)
+            }
+            placeholder="Category"
+            classNamePrefix="custom-select"
+            styles={optionStyles}
+          />
+          <Select<Option, false>
+            instanceId="sex-select"
+            options={[{ value: '', label: 'Show all' }, ...sexOptions]}
+            value={sex ? { value: sex, label: sex } : null}
+            onChange={(opt: SingleValue<Option>) => setSex((opt?.value as Sex) ?? null)}
+            placeholder="By gender"
+            classNamePrefix="custom-select"
+            styles={optionStyles}
+          />
         </div>
 
+        <Select<Option, false>
+          instanceId="species-select"
+          options={[{ value: '', label: 'Show all' }, ...speciesOptions]}
+          value={species ? { value: species, label: species } : null}
+          onChange={(opt: SingleValue<Option>) => setSpecies((opt?.value as Species) ?? null)}
+          placeholder="By type"
+          classNamePrefix="custom-select"
+          styles={optionStyles}
+        />
         <AsyncSelect<LocationOption, false>
           instanceId="location-select"
           cacheOptions
           loadOptions={loadLocations}
           defaultOptions
-          onChange={(opt) => setLocationId(opt?.value ?? null)}
+          value={locationValue}
+          onChange={(opt) => {
+            setLocationValue(opt);
+            setLocationId(opt?.value ?? null);
+          }}
           placeholder="Location"
           classNamePrefix="location"
-          components={{ DropdownIndicator }}
-          styles={{
-            control: (base) => ({
-              ...base,
-              width: 295,
-              minHeight: 42,
-              borderRadius: 30,
-              border: 'none',
-              boxShadow: 'none',
-              '&:hover': {
-                borderColor: 'var(--primary-orange)',
-              },
-            }),
-            placeholder: (base) => ({
-              ...base,
-              width: 270,
-              fontWeight: 500,
-              fontSize: 14,
-              lineHeight: 1.3,
-              color: 'var(--secondary)',
-            }),
-            valueContainer: (base) => ({
-              ...base,
-              paddingLeft: 12,
-            }),
-
-            dropdownIndicator: (base) => ({
-              ...base,
-              stroke: 'var(--secondary)',
-              fill: 'var(--text)',
-            }),
-            indicatorsContainer: (base) => ({ ...base, paddingRight: 4 }),
-
-            indicatorSeparator: () => ({
-              display: 'none',
-            }),
-          }}
+          components={{ DropdownIndicator: LocationDropdownIndicator }}
+          styles={locationStyles}
         />
       </div>
-
       <div className={css.sort}>
         {(['popular', 'unpopular', 'cheap', 'expensive'] as const).map((option) => (
           <label key={option} className={`${css.radio} ${sort === option ? css.active : ''}`}>
@@ -258,9 +256,6 @@ export default function NoticesFilters({ onFilterChange }: NoticesFiltersProps) 
           </label>
         ))}
       </div>
-      {/* <button type="button" onClick={handleReset} className={css.resetBtn}>
-        Reset
-      </button> */}
     </div>
   );
 }

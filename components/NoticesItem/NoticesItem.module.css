@@ -55,8 +55,8 @@
 .details {
   display: flex;
   flex-wrap: nowrap;
-  align-items: flex-start;
-  justify-content: flex-start;
+  /* align-items: flex-start;
+  justify-content: flex-start; */
   flex-direction: row;
   gap: 14px;
 }
@@ -121,10 +121,6 @@
   .card {
     max-width: 342px;
     min-height: 472px;
-  }
-  .contCard {
-    display: flex;
-    flex-direction: column;
   }
   .subtitle {
     font-size: 18px;

@@ -41,9 +41,10 @@ export type NoticesQueryParams = {
   species?: Species;
   sex?: Sex;
   locationId?: string;
-  isDateSort?: boolean;
-  isPriceSort?: boolean;
   isPopularitySort?: boolean;
+  isDateSort?: boolean;
+  isPriceSortAsc?: boolean;
+  isPriceSortDesc?: boolean;
   page?: number;
   limit?: number;
 };
@@ -90,9 +91,9 @@ export type NoticeDetails = {
   isFavorite: boolean;
 };
 
-export type Category = 'sell' | 'free' | 'lost' | 'found';
+export type Category = 'Sell' | 'Free' | 'Lost' | 'Found';
 
-export type Sex = 'unknown' | 'female' | 'male' | 'multiple';
+export type Sex = 'Unknown' | 'Female' | 'Male' | 'Multiple';
 
 export type Species =
   | 'dog'
