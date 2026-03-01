@@ -1,3 +1,25 @@
+.editInfo {
+  display: flex;
+  justify-content: space-between;
+}
+.editUser {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  gap: 4px;
+  border-radius: 30px;
+  padding: 10px 14px;
+  background-color: var(--primary-orange);
+  color: var(--text);
+}
+.userName {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.28571;
+  letter-spacing: -0.02em;
+  color: var(--text);
+}
 .btnEdit {
   border-radius: 30px;
   padding: 10px;
@@ -5,8 +27,18 @@
   height: 38px;
   background-color: var(--accent);
 }
+.btnEdit:hover {
+  background-color: var(--accent-hover);
+}
+.user {
+  stroke-width: 2px;
+  stroke: var(--text);
+  fill: var(--text);
+}
 .edit {
   stroke-width: 1.5px;
   fill: transparent;
   stroke: var(--primary-orange);
+}
+@media screen and (min-width: 768px) {
 }

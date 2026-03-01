@@ -9,8 +9,8 @@
   text-transform: uppercase;
   text-align: center;
   margin: 0 auto;
-  width: 100%;
-  max-width: 200px;
+  /* width: 100%;
+  max-width: 200px; */
   background-color: var(--accent);
   color: var(--primary-orange);
 }
@@ -27,9 +27,13 @@
     line-height: 1.25;
     padding: 15px 35px;
     max-width: 136px;
-    background-color: var(--primary-orange);
-    color: var(--text);
+    background-color: var(--accent);
+    color: var(--primary-orange);
   }
+}
+.logout:hover,
+.log:hover {
+  background-color: var(--accent-hover);
 }
 @media screen and (min-width: 1280px) {
 }

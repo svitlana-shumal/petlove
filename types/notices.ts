@@ -41,8 +41,9 @@ export type NoticesQueryParams = {
   species?: Species;
   sex?: Sex;
   locationId?: string;
+  sort?: 'popular' | 'unpopular' | 'cheap' | 'expensive';
   isPopularitySort?: boolean;
-  isDateSort?: boolean;
+  isUnpopularSort?: boolean;
   isPriceSortAsc?: boolean;
   isPriceSortDesc?: boolean;
   page?: number;

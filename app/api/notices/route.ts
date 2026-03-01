@@ -7,27 +7,20 @@ export async function GET(request: NextRequest) {
   try {
     const searchParams = request.nextUrl.searchParams;
 
+    const sort = searchParams.get('sort');
     const params: NoticesQueryParams = {
       keyword: searchParams.get('keyword') || undefined,
-
       page: Number(searchParams.get('page') ?? 1),
       limit: Number(searchParams.get('perPage') ?? 6),
-
       category: (searchParams.get('category') as NoticesQueryParams['category']) || undefined,
-
       sex: (searchParams.get('sex') as NoticesQueryParams['sex']) || undefined,
-
       species: (searchParams.get('species') as NoticesQueryParams['species']) || undefined,
-
       locationId: searchParams.get('locationId') || undefined,
 
-      byPopularity:
-        searchParams.get('byPopularity') !== null
-          ? searchParams.get('byPopularity') === 'true'
-          : undefined,
-
-      byPrice:
-        searchParams.get('byPrice') !== null ? searchParams.get('byPrice') === 'true' : undefined,
+      isPopularitySort: sort === 'popular' ? true : undefined,
+      isUnpopularSort: sort === 'unpopular' ? true : undefined,
+      isPriceSortAsc: sort === 'cheap' ? true : undefined,
+      isPriceSortDesc: sort === 'expensive' ? true : undefined,
     };
 
     const res = await api.get<FetchPetsResponse>('/notices', { params });

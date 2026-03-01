@@ -51,7 +51,7 @@ export default function ModalNotice({ notice, onClose }: ModalNoticeProp) {
   };
 
   return createPortal(
-    <div className={css.backdrop} onClick={handleBackdropClick} role="dialog" aria-modal="true">
+    <div className={css.backdrop} onClick={handleBackdropClick} aria-labelledby="modal-title">
       <div className={css.modal}>
         <button className={css.close} onClick={onClose}>
           <svg width={24} height={24}>

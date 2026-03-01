@@ -16,19 +16,33 @@ interface ModalEditUserProp {
   onClose: () => void;
 }
 
+// const validationSchema = Yup.object().shape({
+//   name: Yup.string().trim().required('Name is required'),
+//   email: Yup.string()
+//     .trim()
+//     .matches(/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/, 'Invalid email')
+//     .required('Email is required'),
+//   avatar: Yup.string()
+//     .matches(/^https?:\/\/.*\.(?:png|jpg|jpeg|gif|bmp|webp)$/, 'Invalid avatar URL')
+//     .required('Avatar URL is required'),
+//   phone: Yup.string()
+//     .trim()
+//     .matches(/^\+38\d{10}$/, 'Phone must be in format +38XXXXXXXXXX')
+//     .required('Phone is required'),
+// });
+
 const validationSchema = Yup.object().shape({
-  name: Yup.string().trim().required('Name is required'),
+  name: Yup.string().trim(),
   email: Yup.string()
     .trim()
-    .matches(/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/, 'Invalid email')
-    .required('Email is required'),
-  avatar: Yup.string()
-    .matches(/^https?:\/\/.*\.(?:png|jpg|jpeg|gif|bmp|webp)$/, 'Invalid avatar URL')
-    .required('Avatar URL is required'),
+    .matches(/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/, 'Invalid email'),
+  avatar: Yup.string().matches(
+    /^https?:\/\/.*\.(?:png|jpg|jpeg|gif|bmp|webp)$/,
+    'Invalid avatar URL'
+  ),
   phone: Yup.string()
     .trim()
-    .matches(/^\+38\d{10}$/, 'Phone must be in format +38XXXXXXXXXX')
-    .required('Phone is required'),
+    .matches(/^\+38\d{10}$/, 'Phone must be in format +38XXXXXXXXXX'),
 });
 
 export default function ModalEditUser({ onClose }: ModalEditUserProp) {
