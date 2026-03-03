@@ -1,0 +1,16 @@
+.profileInfo {
+  border-radius: 30px;
+  background-color: var(--text);
+  padding: 18px 20px 40px 20px;
+}
+@media screen and (min-width: 768px) {
+  .profileInfo {
+    border-radius: 60px;
+    padding: 40px;
+  }
+}
+@media screen and (min-width: 1280px) {
+  .profile {
+    max-width: 520px;
+  }
+}

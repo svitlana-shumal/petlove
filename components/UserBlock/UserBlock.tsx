@@ -18,8 +18,8 @@ export default function UserBlock() {
           <Image
             src="user?.avatar"
             alt={displayName}
-            width={80}
-            height={80}
+            width={94}
+            height={94}
             className={css.avatar}
             priority
           />
@@ -28,8 +28,8 @@ export default function UserBlock() {
             <Image
               src="/user-default.png"
               alt={displayName}
-              width={80}
-              height={80}
+              width={94}
+              height={94}
               className={css.avatar}
               priority
             />

@@ -34,7 +34,7 @@ export async function DELETE(request: NextRequest, { params }: Props) {
         message = data.message || data.error;
       }
       return NextResponse.json(
-        { message: message || 'Failed to remove notice to favorites' },
+        { message: message || 'Failed to remove notice from favorites' },
         { status }
       );
     }

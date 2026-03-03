@@ -1,0 +1,44 @@
+.pets {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: row;
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+.desc {
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 1.25;
+  color: var(--secondary);
+}
+.addPet {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
+  border-radius: 30px;
+  padding: 10px 16px;
+  background-color: var(--primary-orange);
+  color: var(--text);
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 1.28;
+  letter-spacing: -0.03em;
+}
+.addPet:hover {
+  background-color: var(--hover);
+}
+.icon {
+  stroke: var(--text);
+}
+@media screen and (min-width: 768px) {
+  .desc {
+    font-size: 18px;
+    line-height: 1.33;
+  }
+  .addPet {
+    padding: 10px 20px;
+    font-size: 16px;
+    line-height: 1.25;
+  }
+}

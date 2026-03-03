@@ -94,7 +94,7 @@ export type NoticeDetails = {
 
 export type Category = 'Sell' | 'Free' | 'Lost' | 'Found';
 
-export type Sex = 'Unknown' | 'Female' | 'Male' | 'Multiple';
+export type Sex = 'unknown' | 'female' | 'male' | 'multiple';
 
 export type Species =
   | 'dog'

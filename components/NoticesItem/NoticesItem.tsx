@@ -2,11 +2,12 @@
 
 import { NoticeDetails } from '@/types/notices';
 import css from './NoticesItem.module.css';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import ModalNotice from '@/components/ModalNotice/ModalNotice';
 import { useAuthStore } from '@/lib/store/auth';
 import ModalAttention from '../ModalAttention/ModalAttention';
+import { addFavorites, removeFavorites } from '@/lib/clientApi';
 
 type NoticesItemProp = { notice: NoticeDetails };
 
@@ -14,29 +15,18 @@ export default function NoticesItem({ notice }: NoticesItemProp) {
   const [isModalNoticeOpen, setIsModalNoticeOpen] = useState(false);
   const [isModalAttentionOpen, setIsModalAttentionOpen] = useState(false);
   const [isFavorite, setIsFavorite] = useState<boolean>(notice.isFavorite);
-  const [formattedBirthday, setFormattedBirthday] = useState('');
   const { isAuthenticated } = useAuthStore();
 
-  useEffect(() => {
-    if (notice.birthday) {
-      const date = new Date(notice.birthday);
-      setFormattedBirthday(date.toLocaleDateString('uk-UA'));
-    }
-  }, [notice.birthday]);
-  useEffect(() => {});
+  const formattedBirthday = notice.birthday
+    ? new Date(notice.birthday).toLocaleDateString('uk-UA')
+    : '';
+
   const handleFavorite = async () => {
     try {
-      const endpoint = isFavorite
-        ? `/api/notices/favorites/remove/${notice._id}`
-        : `/api/notices/favorites/add/${notice._id}`;
-      const res = await fetch(endpoint, {
-        method: isFavorite ? 'DELETE' : 'POST',
-        headers: { Authorization: `Bearer ${localStorage.getItem('token')}` },
-      });
-      if (!res.ok) throw new Error('Failed to update favorite');
-      const favorites: string[] = await res.json();
-      const isFav = favorites.includes(notice._id);
-      setIsFavorite(isFav);
+      const favorites = isFavorite
+        ? await removeFavorites(notice._id)
+        : await addFavorites(notice._id);
+      setIsFavorite(favorites.includes(notice._id));
     } catch (error) {
       console.error(error);
     }

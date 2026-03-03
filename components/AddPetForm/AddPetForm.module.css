@@ -1,0 +1,73 @@
+.addPetForm {
+  background-color: var(--text);
+  border-radius: 30px;
+  padding: 0 20px 20px 20px;
+  margin-top: 10px;
+}
+.title {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  flex-direction: row;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+.spanPerson {
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.28;
+  color: rgba(43, 43, 42, 0.4);
+}
+
+.radioGroup {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-direction: row;
+  gap: 8px;
+  appearance: none;
+}
+
+.radio {
+  border-radius: 30px;
+  padding: 6px;
+  background: rgba(244, 63, 94, 0.1);
+}
+
+.imageAvatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 8px;
+  margin-bottom: 16px;
+}
+.avatar {
+}
+
+.buttons {
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+  flex-direction: row;
+  gap: 8px;
+  margin-top: 31px;
+}
+.back,
+.submit {
+  border-radius: 30px;
+  padding: 12px 26px;
+  background-color: rgba(38, 38, 38, 0.05);
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1.28;
+  letter-spacing: -0.03em;
+  color: var(--secondary);
+}
+.back {
+  padding: 12px 34px;
+}
+.back:hover,
+.submit:hover {
+  color: var(--text);
+  background-color: var(--primary-orange);
+}

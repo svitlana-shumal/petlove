@@ -14,7 +14,7 @@
   flex-direction: column;
   gap: 8px;
   margin: 0 auto;
-  margin-top: -18px;
+  margin-top: 0px;
   margin-bottom: 28px;
 }
 .userAvatar {
@@ -61,6 +61,16 @@
   .info {
     font-size: 18px;
     line-height: 1.33;
+  }
+  .userAvatar,
+  .userDefault {
+    width: 110px;
+    height: 110px;
+    margin-top: -18px;
+  }
+  .upload {
+    font-size: 14px;
+    line-height: 1.28;
   }
   .userName,
   .userEmail,

@@ -3,6 +3,7 @@
 import Container from '@/components/Container/Container';
 import PetBlock from '@/components/PetBlock/PetBlock';
 import css from './AddPet.module.css';
+import AddPetForm from '@/components/AddPetForm/AddPetForm';
 
 export default function AddPet() {
   return (
@@ -16,11 +17,7 @@ export default function AddPet() {
             desktop: '/dogPet/dogPet-desktop2x.webp',
           }}
         />
-        <div className={css.contPage}>
-          <h2 className={css.title}>
-            Add my pet / <span className={css.subtitle}>personal details</span>
-          </h2>
-        </div>
+        <AddPetForm />
       </section>
     </Container>
   );
