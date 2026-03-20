@@ -3,11 +3,10 @@ import { api } from '../../api';
 import { isAxiosError } from 'axios';
 import { cookies } from 'next/headers';
 
-type Props = { params: { id: string } };
 type ApiErrorResponse = { message?: string; error?: string };
 
-export async function GET(request: NextRequest, { params }: Props) {
-  const { id } = params;
+export async function GET(request: NextRequest, context: { params: { id: string } }) {
+  const { id } = context.params;
   try {
     let token = request.headers.get('authorization')?.replace('Bearer ', '') || '';
     if (!token) {
