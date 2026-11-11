@@ -9,6 +9,9 @@
   padding: 24px;
   background-color: var(--text);
 }
+.card:hover {
+  box-shadow: 16px 5px 16px rgba(0, 0, 0, 0.12);
+}
 .titleCont {
   display: flex;
   align-items: center;
@@ -88,6 +91,9 @@
   flex-direction: row;
   gap: 10px;
 }
+.actionsWithoutFavorite .btn {
+  flex: 1;
+}
 .btn {
   border-radius: 30px;
   padding: 14px 80px;
@@ -108,13 +114,33 @@
   height: 46px;
   background-color: var(--accent);
 }
+.removeFavorite {
+  display: grid;
+  width: 40px;
+  height: 40px;
+  flex: 0 0 40px;
+  place-items: center;
+  padding: 0;
+  border-radius: 50%;
+}
+.removeFavorite:hover:not(:disabled) {
+  background-color: var(--accent-hover);
+}
+.iconTrash {
+  display: block;
+  fill: none;
+  color: var(--primary-orange);
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
 .iconHeard {
   stroke: var(--primary-orange);
-  fill: var(--accent);
+  fill: var(--primary-orange);
 }
 .iconHeardFavor {
   stroke: var(--primary-orange);
-  fill: var(--accent);
+  fill: none;
 }
 
 @media screen and (min-width: 768px) {
@@ -144,9 +170,13 @@
 }
 @media screen and (min-width: 1280px) {
   .card {
-    max-width: 363px;
+    max-width: none;
   }
   .image {
-    width: 315px;
+    width: 100%;
+  }
+  .btn {
+    flex: 1;
+    padding-inline: 8px;
   }
 }

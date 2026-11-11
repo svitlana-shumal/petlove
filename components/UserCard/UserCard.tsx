@@ -7,13 +7,11 @@ import LogOutBtn from '@/components/LogOutBtn/LogOutBtn';
 import PetsBlock from '../PetsBlock/PetsBlock';
 export default function UserCard() {
   return (
-    <section className={css.profile}>
-      <div className={css.profileInfo}>
-        <EditUserBtn />
-        <UserBlock />
-        <PetsBlock />
-        <LogOutBtn />
-      </div>
+    <section className={css.profileInfo}>
+      <EditUserBtn />
+      <UserBlock />
+      <PetsBlock />
+      <LogOutBtn />
     </section>
   );
 }

@@ -1,66 +1,65 @@
-// import { create } from 'zustand';
-// import {
-//   addNoticeToFavorites,
-//   removeNoticeFromFavorites,
-//   getCurrentUserFull,
-// } from '@/lib/clientApi';
-// import { useAuthStore } from './auth';
+import { create } from 'zustand';
+import { addFavorites, removeFavorites, getCurrentFull } from '@/lib/clientApi';
+import { useAuthStore } from './auth';
 
-// type State = {
-//   favorites: string[];
-//   loaded: boolean;
+type State = {
+  favorites: string[];
+  loaded: boolean;
 
-//   loadFavorites: () => Promise<void>;
-//   toggleFavorite: (id: string) => Promise<void>;
-//   isFavorite: (id: string) => boolean;
-// };
+  setFavorites: (favorites: string[]) => void;
+  reset: () => void;
+  loadFavorites: () => Promise<void>;
+  toggleFavorite: (id: string) => Promise<void>;
+  isFavorite: (id: string) => boolean;
+};
 
-// export const useFavoritesStore = create<State>((set, get) => ({
-//   favorites: [],
-//   loaded: false,
+export const useFavoritesStore = create<State>((set, get) => ({
+  favorites: [],
+  loaded: false,
 
-//   /* ---------- CHECK ---------- */
-//   isFavorite: (id) => get().favorites.includes(id),
+  setFavorites: (favorites) => set({ favorites, loaded: true }),
+  reset: () => set({ favorites: [], loaded: false }),
 
-//   /* ---------- LOAD FROM SERVER ---------- */
-//   loadFavorites: async () => {
-//     const token = useAuthStore.getState().token;
-//     if (!token) return;
+  isFavorite: (id) => get().favorites.includes(id),
 
-//     try {
-//       const data = await getCurrentUserFull(token);
+  loadFavorites: async () => {
+    const auth = useAuthStore.getState();
+    if (!auth.isAuthenticated) {
+      set({ favorites: [], loaded: false });
+      return;
+    }
 
-//       const ids = data.noticesFavorites.map((n) => n._id);
+    try {
+      const data = auth.user ?? (await getCurrentFull());
+      const ids = data?.noticesFavorites?.map((notice) => notice._id) ?? [];
 
-//       set({
-//         favorites: ids,
-//         loaded: true,
-//       });
-//     } catch (e) {
-//       console.error('Failed to load favorites', e);
-//     }
-//   },
+      set({
+        favorites: ids,
+        loaded: true,
+      });
+    } catch (e) {
+      console.error('Failed to load favorites', e);
+    }
+  },
 
-//   /* ---------- TOGGLE ---------- */
-//   toggleFavorite: async (id) => {
-//     const token = useAuthStore.getState().token;
-//     if (!token) return;
+  toggleFavorite: async (id) => {
+    if (!useAuthStore.getState().isAuthenticated) return;
 
-//     const { favorites } = get();
-//     const exists = favorites.includes(id);
+    const { favorites } = get();
+    const exists = favorites.includes(id);
 
-//     try {
-//       if (exists) {
-//         await removeNoticeFromFavorites(id, token);
-//         set({ favorites: favorites.filter((f) => f !== id) });
-//       } else {
-//         await addNoticeToFavorites(id, token);
-//         set({ favorites: [...favorites, id] });
-//       }
+    try {
+      if (exists) {
+        await removeFavorites(id);
+        set({ favorites: favorites.filter((f) => f !== id) });
+      } else {
+        await addFavorites(id);
+        set({ favorites: [...favorites, id] });
+      }
 
-//       await useAuthStore.getState().refreshUser();
-//     } catch (e) {
-//       console.error('Favorite sync error', e);
-//     }
-//   },
-// }));
+      await useAuthStore.getState().refreshUser();
+    } catch (e) {
+      console.error('Favorite sync error', e);
+    }
+  },
+}));

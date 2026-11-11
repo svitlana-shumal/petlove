@@ -1,16 +1,21 @@
-.profileInfo {
-  border-radius: 30px;
-  background-color: var(--text);
-  padding: 18px 20px 40px 20px;
+.container {
+  display: grid;
+  gap: 24px;
+  padding-block: 20px 60px;
 }
 @media screen and (min-width: 768px) {
-  .profileInfo {
-    border-radius: 60px;
-    padding: 40px;
+  .container {
+    gap: 32px;
+    padding-block: 32px 80px;
   }
 }
 @media screen and (min-width: 1280px) {
-  .profile {
-    max-width: 520px;
+  .container {
+    width: 100%;
+    max-width: 1440px;
+    grid-template-columns: minmax(0, 520px) minmax(0, 1fr);
+    align-items: start;
+    gap: 32px;
+    padding-block: 40px 100px;
   }
 }

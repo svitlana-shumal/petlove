@@ -3,7 +3,8 @@
 //   avatar?: string | null;
 // }
 
-import { Notice, Pet } from './notices';
+import { Notice } from './notices';
+import { ProfilePet } from './pets';
 
 export interface Register {
   name: string;
@@ -14,7 +15,6 @@ export interface Register {
 export interface AuthResponse {
   email: string;
   name: string;
-  token: string;
 }
 
 export interface LoginValue {
@@ -27,10 +27,9 @@ export type User = {
   name?: string;
   avatar?: string | null;
   phone?: string;
-  token?: string;
   noticesViewed?: Notice[];
   noticesFavorites?: Notice[];
-  pets?: Pet[];
+  pets?: ProfilePet[];
   createdAt?: Date;
   updatedAt?: Date;
 };
@@ -48,6 +47,5 @@ export type EditUserResponse = {
   name?: string;
   avatar?: string | null;
   phone?: string;
-  token?: string;
   noticesViewed?: Notice[];
 };

@@ -11,11 +11,8 @@ interface FriendsItemProp {
 }
 export default function FriendsItem({ friend }: FriendsItemProp) {
   const address = friend.address ? truncate(friend.address, 20) : 'website only';
-
   const email = friend.email ? truncate(friend.email, 22) : 'phone only';
-
   const phone = friend.phone ? truncate(friend.phone, 20) : 'email only';
-
   const schedule =
     friend.workDays && friend.workDays.some((day) => day.isOpen)
       ? Array.from(

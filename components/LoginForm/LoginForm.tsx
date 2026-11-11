@@ -12,6 +12,7 @@ import { useState } from 'react';
 import Title from '../Title/Title';
 import Link from 'next/link';
 import { useAuthStore } from '@/lib/store/auth';
+import { useFavoritesStore } from '@/lib/store/favoritesStore';
 
 const validationSchema = Yup.object().shape({
   email: Yup.string()
@@ -39,16 +40,23 @@ export default function LoginForm() {
   const passwordValue = useWatch({ control, name: 'password' });
   const [showPassword, setShowPassword] = useState(false);
 
-  const { setUser } = useAuthStore();
-
   const onSubmit = async (data: LoginValue) => {
     try {
       const result = await signIn(data);
-      if (result.token) {
-        toast.success('Login successful 🎉');
-        setUser({ _id: result.email, name: result.name, email: result.email, avatar: null });
-        router.push('/profile');
+      useAuthStore.getState().setUser(result);
+      try {
+        await useAuthStore.getState().refreshUser();
+      } catch (error) {
+        toast.error(
+          error instanceof Error ? `Signed in, but profile loading failed: ${error.message}` : 'Signed in, but profile loading failed'
+        );
       }
+      const favorites = useAuthStore
+        .getState()
+        .user?.noticesFavorites?.map((notice) => notice._id) ?? [];
+      useFavoritesStore.getState().setFavorites(favorites);
+      toast.success('Login successful 🎉');
+      router.push('/profile');
     } catch (error) {
       if (error instanceof Error) toast.error(error.message || 'Login failed');
     }

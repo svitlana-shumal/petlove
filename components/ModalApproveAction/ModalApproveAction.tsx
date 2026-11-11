@@ -8,12 +8,14 @@ import { useAuthStore } from '@/lib/store/auth';
 import { useRouter } from 'next/navigation';
 import { logoutUser } from '@/lib/clientApi';
 import toast from 'react-hot-toast';
+import { useFavoritesStore } from '@/lib/store/favoritesStore';
 
 type ModalApproveActionProps = {
   onCancel: () => void;
 };
 export default function ModalApproveAction({ onCancel }: ModalApproveActionProps) {
   const { clearIsAuthenticated } = useAuthStore();
+  const resetFavorites = useFavoritesStore((state) => state.reset);
   const router = useRouter();
 
   useEffect(() => {
@@ -33,16 +35,23 @@ export default function ModalApproveAction({ onCancel }: ModalApproveActionProps
   };
 
   const handleConfirm = async () => {
+    let logoutSucceeded = false;
     try {
       await logoutUser();
+      logoutSucceeded = true;
     } catch (error) {
       if (error instanceof Error) toast.error(error.message || 'Logout failed');
     } finally {
       clearIsAuthenticated();
-      localStorage.removeItem('auth');
-      router.push('/');
-      toast.success('You have logged out successfully');
+      resetFavorites();
+      try {
+        localStorage.removeItem('auth');
+      } catch (error) {
+        toast.error(error instanceof Error ? error.message : 'Failed to clear local session data');
+      }
+      router.push('/home');
     }
+    if (logoutSucceeded) toast.success('You have logged out successfully');
   };
 
   return (

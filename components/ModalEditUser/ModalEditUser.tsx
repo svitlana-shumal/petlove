@@ -10,43 +10,33 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import toast from 'react-hot-toast';
 import { currentEdit } from '@/lib/clientApi';
-import { EditUser, User } from '@/types/users';
+import { EditUser } from '@/types/users';
 
 interface ModalEditUserProp {
   onClose: () => void;
 }
-
-// const validationSchema = Yup.object().shape({
-//   name: Yup.string().trim().required('Name is required'),
-//   email: Yup.string()
-//     .trim()
-//     .matches(/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/, 'Invalid email')
-//     .required('Email is required'),
-//   avatar: Yup.string()
-//     .matches(/^https?:\/\/.*\.(?:png|jpg|jpeg|gif|bmp|webp)$/, 'Invalid avatar URL')
-//     .required('Avatar URL is required'),
-//   phone: Yup.string()
-//     .trim()
-//     .matches(/^\+38\d{10}$/, 'Phone must be in format +38XXXXXXXXXX')
-//     .required('Phone is required'),
-// });
-
 const validationSchema = Yup.object().shape({
   name: Yup.string().trim(),
   email: Yup.string()
     .trim()
-    .matches(/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/, 'Invalid email'),
+    .matches(/^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/, {
+      message: 'Invalid email',
+      excludeEmptyString: true,
+    }),
   avatar: Yup.string().matches(
     /^https?:\/\/.*\.(?:png|jpg|jpeg|gif|bmp|webp)$/,
-    'Invalid avatar URL'
+    { message: 'Invalid avatar URL', excludeEmptyString: true }
   ),
   phone: Yup.string()
     .trim()
-    .matches(/^\+38\d{10}$/, 'Phone must be in format +38XXXXXXXXXX'),
+    .matches(/^\+38\d{10}$/, {
+      message: 'Phone must be in format +38XXXXXXXXXX',
+      excludeEmptyString: true,
+    }),
 });
 
 export default function ModalEditUser({ onClose }: ModalEditUserProp) {
-  const { user, setUser } = useAuthStore();
+  const { user, updateUser } = useAuthStore();
   const {
     register,
     handleSubmit,
@@ -79,8 +69,8 @@ export default function ModalEditUser({ onClose }: ModalEditUserProp) {
 
   const onSubmit = async (data: EditUser) => {
     try {
-      const updatedUser: User = await currentEdit(data);
-      setUser(updatedUser);
+      const updatedUser = await currentEdit(data);
+      if (user) updateUser({ ...user, ...updatedUser });
       toast.success('Profile updated successfully');
       onClose();
     } catch (error) {
@@ -115,6 +105,8 @@ export default function ModalEditUser({ onClose }: ModalEditUserProp) {
                 placeholder="Avatar URL"
                 {...register('avatar')}
                 className={css.avatarUrl}
+                aria-label="Avatar URL"
+                aria-invalid={!!errors.avatar}
               />
               <button type="button" className={css.uploadBtn}>
                 Upload photo
@@ -129,6 +121,7 @@ export default function ModalEditUser({ onClose }: ModalEditUserProp) {
                 className={css.name}
                 {...register('name')}
                 aria-label="Name user"
+                aria-invalid={!!errors.name}
               />
 
               {errors.name && <span className={css.error}>{errors.name.message}</span>}
@@ -139,6 +132,7 @@ export default function ModalEditUser({ onClose }: ModalEditUserProp) {
                 {...register('email')}
                 className={css.email}
                 aria-label="Email user"
+                aria-invalid={!!errors.email}
               ></input>
 
               {errors.email && <span className={css.error}>{errors.email.message}</span>}
@@ -149,6 +143,7 @@ export default function ModalEditUser({ onClose }: ModalEditUserProp) {
                 {...register('phone')}
                 className={css.phone}
                 aria-label="Phone user"
+                aria-invalid={!!errors.phone}
               ></input>
               {errors.phone && <span className={css.error}>{errors.phone.message}</span>}
             </div>

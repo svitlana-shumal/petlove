@@ -5,7 +5,7 @@ import { api } from '../api';
 export async function GET(request: NextRequest) {
   try {
     const searchParams = request.nextUrl.searchParams;
-    const keyword = searchParams.get('query') || undefined;
+    const keyword = searchParams.get('query')?.trim() || undefined;
 
     const page = Number(request.nextUrl.searchParams.get('page') ?? 1);
     const perPage = Number(request.nextUrl.searchParams.get('perPage') ?? 6);

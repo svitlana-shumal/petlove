@@ -1,0 +1,70 @@
+.myNotices {
+  min-width: 0;
+}
+
+.tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.tab {
+  padding: 10px 18px;
+  border-radius: 30px;
+  background-color: var(--text);
+  color: var(--secondary);
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.active {
+  background-color: var(--primary-orange);
+  color: var(--text);
+}
+
+.list {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 16px;
+}
+
+.empty {
+  display: flex;
+  min-height: 340px;
+  max-width: 420px;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  color: var(--secondary);
+  font-size: 14px;
+  line-height: 1.4;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .tabs {
+    gap: 10px;
+    margin-bottom: 32px;
+  }
+
+  .tab {
+    padding: 12px 24px;
+    font-size: 16px;
+  }
+
+  .empty {
+    min-height: 420px;
+    font-size: 16px;
+  }
+
+  .list {
+    grid-template-columns: repeat(2, minmax(0, 342px));
+    gap: 16px;
+  }
+}
+
+@media (min-width: 1280px) {
+  .list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}

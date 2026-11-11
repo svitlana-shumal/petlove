@@ -8,6 +8,7 @@ import { Category, City, FiltersState, Sex, Species } from '@/types/notices';
 import Select, { DropdownIndicatorProps, GroupBase, SingleValue, StylesConfig } from 'react-select';
 import AsyncSelect from 'react-select/async';
 import { components } from 'react-select';
+import toast from 'react-hot-toast';
 interface NoticesFiltersProps {
   onFilterChange: (filters: FiltersState) => void;
 }
@@ -28,26 +29,41 @@ export default function NoticesFilters({ onFilterChange }: NoticesFiltersProps) 
   const [sexOptions, setSexOptions] = useState<Option[]>([]);
   const [speciesOptions, setSpeciesOptions] = useState<Option[]>([]);
   const [locationValue, setLocationValue] = useState<LocationOption | null>(null);
+  const [searchFieldKey, setSearchFieldKey] = useState(0);
 
   useEffect(() => {
-    (async () => {
-      const categories = await getCategories();
-      setCategoriesOptions(categories.map((c: string) => ({ value: c, label: c })));
-      const sexes = await getSex();
-      setSexOptions(sexes.map((s: string) => ({ value: s, label: s })));
-      const species = await getSpecies();
-      setSpeciesOptions(species.map((sp: string) => ({ value: sp, label: sp })));
-    })();
+    let active = true;
+    Promise.all([getCategories(), getSex(), getSpecies()])
+      .then(([categories, sexes, species]) => {
+        if (!active) return;
+        setCategoriesOptions(categories.map((value) => ({ value, label: value })));
+        setSexOptions(sexes.map((value) => ({ value, label: value })));
+        setSpeciesOptions(species.map((value) => ({ value, label: value })));
+      })
+      .catch((error: unknown) => {
+        if (active) {
+          toast.error(error instanceof Error ? error.message : 'Unable to load filter options.');
+        }
+      });
+
+    return () => {
+      active = false;
+    };
   }, []);
 
   const loadLocations = async (inputValue: string): Promise<LocationOption[]> => {
     if (!inputValue) return [];
-    const locations: City[] = await searchCities(inputValue);
-    return locations.map((loc) => ({
-      value: loc._id,
-      label: `${loc.cityEn}, ${loc.stateEn}`,
-      data: loc,
-    }));
+    try {
+      const locations: City[] = await searchCities(inputValue);
+      return locations.map((loc) => ({
+        value: loc._id,
+        label: `${loc.cityEn}, ${loc.stateEn}`,
+        data: loc,
+      }));
+    } catch (error) {
+      toast.error(error instanceof Error ? error.message : 'Unable to search locations.');
+      return [];
+    }
   };
 
   useEffect(() => {
@@ -59,6 +75,17 @@ export default function NoticesFilters({ onFilterChange }: NoticesFiltersProps) 
     e.stopPropagation();
     setLocationValue(null);
     setLocationId(null);
+  };
+
+  const handleReset = () => {
+    setSearch('');
+    setCategory(null);
+    setSex(null);
+    setSpecies(null);
+    setLocationValue(null);
+    setLocationId(null);
+    setSort(null);
+    setSearchFieldKey((key) => key + 1);
   };
 
   const LocationDropdownIndicator: React.FC<
@@ -176,7 +203,12 @@ export default function NoticesFilters({ onFilterChange }: NoticesFiltersProps) 
   return (
     <div className={css.filters}>
       <div className={css.contType}>
-        <SearchField onSearch={setSearch} placeholder="Search" className={css.search} />
+        <SearchField
+          key={searchFieldKey}
+          onSearch={setSearch}
+          placeholder="Search"
+          className={css.search}
+        />
 
         <div className={css.contCategor}>
           <Select<Option, false>
@@ -255,6 +287,9 @@ export default function NoticesFilters({ onFilterChange }: NoticesFiltersProps) 
             )}
           </label>
         ))}
+        <button type="button" className={css.resetBtn} onClick={handleReset}>
+          Reset
+        </button>
       </div>
     </div>
   );

@@ -8,11 +8,19 @@ import { addFavorites, removeFavorites } from '@/lib/clientApi';
 import toast from 'react-hot-toast';
 import { Heart } from 'lucide-react';
 import { createPortal } from 'react-dom';
+import { useAuthStore } from '@/lib/store/auth';
+import { useFavoritesStore } from '@/lib/store/favoritesStore';
 
-type ModalNoticeProp = { notice: NoticeDetails; onClose: () => void };
+type ModalNoticeProp = {
+  notice: NoticeDetails;
+  onClose: () => void;
+  onFavoriteChange: (isFavorite: boolean) => void;
+};
 
-export default function ModalNotice({ notice, onClose }: ModalNoticeProp) {
+export default function ModalNotice({ notice, onClose, onFavoriteChange }: ModalNoticeProp) {
   const [isFavorite, setIsFavorite] = useState(notice.isFavorite);
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const setFavorites = useFavoritesStore((state) => state.setFavorites);
 
   const handleBackdropClick = (event: React.MouseEvent<HTMLDivElement>) => {
     if (event.target === event.currentTarget) {
@@ -35,6 +43,10 @@ export default function ModalNotice({ notice, onClose }: ModalNoticeProp) {
   }, [onClose]);
 
   const handleToggleFavorite = async () => {
+    if (!isAuthenticated) {
+      toast.error('You must be logged in to manage favorites');
+      return;
+    }
     try {
       let favorites: string[];
       if (isFavorite) {
@@ -44,14 +56,22 @@ export default function ModalNotice({ notice, onClose }: ModalNoticeProp) {
       }
       const isFav = favorites.includes(notice._id);
       setIsFavorite(isFav);
+      setFavorites(favorites);
+      onFavoriteChange(isFav);
       toast.success(isFav ? 'Added to favorites' : 'Removed from favorites');
     } catch (error) {
-      if (error instanceof Error) toast.error(error.message);
+      toast.error(error instanceof Error ? error.message : 'Failed to update favorites');
     }
   };
 
   return createPortal(
-    <div className={css.backdrop} onClick={handleBackdropClick} aria-labelledby="modal-title">
+    <div
+      className={css.backdrop}
+      onClick={handleBackdropClick}
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="modal-title"
+    >
       <div className={css.modal}>
         <button className={css.close} onClick={onClose}>
           <svg width={24} height={24}>
@@ -70,7 +90,9 @@ export default function ModalNotice({ notice, onClose }: ModalNoticeProp) {
             <p className={css.category}>{notice.category}</p>
           </div>
           <div className={css.titleCont}>
-            <h3 className={css.subtitle}>{notice.title}</h3>
+            <h3 className={css.subtitle} id="modal-title">
+              {notice.title}
+            </h3>
             <p className={css.popularity}>
               {[...Array(5)].map((_, i) => (
                 <svg

@@ -7,7 +7,7 @@ import NewsList from '@/components/NewsList/NewsList';
 import SearchField from '@/components/SearchField/SearchField';
 import Title from '@/components/Title/Title';
 import { NewsResponse } from '@/types/news';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { fetchNews } from '@/lib/clientApi';
 import Pagination from '@/components/Pagination/Pagination';
 
@@ -15,70 +15,72 @@ export default function News() {
   const [news, setNews] = useState<NewsResponse | null>(null);
   const [loading, setLoading] = useState(false);
   const [notFound, setNotFound] = useState(false);
+  const [error, setError] = useState<string | null>(null);
   const [keyword, setKeyword] = useState<string | undefined>(undefined);
+  const requestId = useRef(0);
 
-  const loadNews = async (keyword?: string, page: number = 1) => {
+  const loadNews = useCallback(async (keyword?: string, page: number = 1) => {
+    const currentRequestId = ++requestId.current;
     setLoading(true);
     setNotFound(false);
+    setError(null);
+    setNews(null);
 
-    const data = await fetchNews(keyword, page);
-
-    let results = data?.results ?? [];
-    if (keyword) {
-      results = results.filter(
-        (item) =>
-          item.title.toLowerCase().includes(keyword.toLowerCase()) ||
-          item.text.toLowerCase().includes(keyword.toLowerCase())
-      );
+    try {
+      const data = await fetchNews(keyword, page);
+      if (currentRequestId === requestId.current) {
+        setNews(data);
+        setNotFound(data.results.length === 0);
+      }
+    } catch (error) {
+      if (currentRequestId === requestId.current) {
+        setError(error instanceof Error ? error.message : 'Unable to load news. Please try again.');
+      }
+    } finally {
+      if (currentRequestId === requestId.current) {
+        setLoading(false);
+      }
     }
-
-    if (data && results.length > 0) {
-      setNews({
-        results,
-        page: data.page,
-        perPage: data.perPage,
-        totalPages: data.totalPages,
-      });
-    } else {
-      setNotFound(true);
-      setNews(null);
-    }
-    setLoading(false);
-  };
+  }, []);
 
   useEffect(() => {
-    const fetchInitialNews = async () => {
-      await loadNews();
-    };
-    fetchInitialNews();
-  }, []);
+    void loadNews();
+  }, [loadNews]);
+
+  const handleSearch = (query: string) => {
+    const searchQuery = query || undefined;
+    setKeyword(searchQuery);
+    void loadNews(searchQuery, 1);
+  };
 
   return (
     <Container className={css.contNews}>
       <div className={css.titleCont}>
         <Title text="News" />
-        <SearchField
-          onSearch={(query) => {
-            setKeyword(query);
-            loadNews(query, 1);
-          }}
-        />
+        <SearchField onSearch={handleSearch} />
       </div>
       {loading && <Loader />}
+      {!loading && error && (
+        <p className={css.error} role="alert">
+          {error}
+        </p>
+      )}
       {!loading && notFound && (
-        <>
-          {keyword && (
-            <div>
-              <h2 className={css.notFound}>
+        <div>
+          <h2 className={css.notFound}>
+            {keyword ? (
+              <>
                 No <span className={css.word}>{keyword}</span> found.
-              </h2>
-              <p className={css.text}>Try changing your search parameters</p>
-            </div>
-          )}
-        </>
+              </>
+            ) : (
+              'No news available.'
+            )}
+          </h2>
+          {keyword && <p className={css.text}>Try changing your search parameters</p>}
+        </div>
       )}
       {!loading && !notFound && news && <NewsList news={news} />}
-      {news && (
+      {!loading && !error && news && (
         <Pagination
           currentPage={news?.page ?? 1}
           totalPages={news?.totalPages ?? 1}

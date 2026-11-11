@@ -1,34 +1,30 @@
-import { cookies } from 'next/headers';
 import { api } from '../../api';
 import { NextResponse } from 'next/server';
-import { AxiosError } from 'axios';
-
-type ApiError = AxiosError<{ error: string }>;
+import {
+  ACCESS_TOKEN_COOKIE,
+  apiErrorResponse,
+  bearerHeaders,
+  getAccessToken,
+  withoutToken,
+} from '../../auth';
 
 export async function POST() {
+  const token = await getAccessToken();
+
+  if (!token) {
+    const response = NextResponse.json({ message: 'Signed out' });
+    response.cookies.delete(ACCESS_TOKEN_COOKIE);
+    return response;
+  }
+
   try {
-    const cookieStore = await cookies();
-    const token = cookieStore.get('accessToken')?.value;
-    const apiRes = await api.post(
-      '/users/signout',
-      {},
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-
-    const res = NextResponse.json(apiRes.data);
-    res.cookies.delete('accessToken');
-
-    return res;
-  } catch (error: unknown) {
-    const err = error as ApiError;
-    console.error('Signin error:', err);
-    return NextResponse.json(
-      { error: err.response?.data?.error || (err as Error).message || 'Server error' },
-      { status: err.response?.status || 500 }
-    );
+    const apiRes = await api.post('/users/signout', {}, { headers: bearerHeaders(token) });
+    const response = NextResponse.json(withoutToken(apiRes.data), { status: apiRes.status });
+    response.cookies.delete(ACCESS_TOKEN_COOKIE);
+    return response;
+  } catch (error) {
+    const response = apiErrorResponse(error);
+    response.cookies.delete(ACCESS_TOKEN_COOKIE);
+    return response;
   }
 }

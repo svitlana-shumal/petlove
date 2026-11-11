@@ -1,25 +1,20 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { api } from '../../../api';
-import { isAxiosError } from 'axios';
-import { cookies } from 'next/headers';
+import { apiErrorResponse, bearerHeaders, getAccessToken, withoutToken } from '../../../auth';
 
-export async function PATCH(req: NextRequest) {
+export async function PATCH(request: NextRequest) {
+  const token = await getAccessToken();
+  if (!token) {
+    return NextResponse.json({ error: 'Not authenticated' }, { status: 401 });
+  }
+
   try {
-    const body = await req.json();
-    const cookieStore = await cookies();
-
-    const token = cookieStore.get('token')?.value;
-    const res = await api.patch('/users/current/edit', body, {
-      headers: { Authorization: token ? `Bearer ${token}` : '' },
+    const body = await request.json();
+    const response = await api.patch('/users/current/edit', body, {
+      headers: bearerHeaders(token),
     });
-    return NextResponse.json(res.data, { status: res.status });
+    return NextResponse.json(withoutToken(response.data), { status: response.status });
   } catch (error) {
-    if (isAxiosError(error)) {
-      return NextResponse.json(
-        { error: error.message, response: error.response?.data || 'Unknown error' },
-        { status: error.response?.status || 500 }
-      );
-    }
-    return NextResponse.json({ error: (error as Error).message }, { status: 500 });
+    return apiErrorResponse(error);
   }
 }

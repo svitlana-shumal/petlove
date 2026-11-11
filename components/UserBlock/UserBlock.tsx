@@ -3,9 +3,12 @@
 import css from './UserBlock.module.css';
 import Image from 'next/image';
 import { useAuthStore } from '@/lib/store/auth';
+import { useState } from 'react';
+import ModalEditUser from '@/components/ModalEditUser/ModalEditUser';
 
 export default function UserBlock() {
   const { user } = useAuthStore();
+  const [isEditOpen, setIsEditOpen] = useState(false);
 
   const displayName = user?.name || 'Name';
   const displayEmail = user?.email || 'Email';
@@ -16,11 +19,12 @@ export default function UserBlock() {
       <div className={css.userAvatar}>
         {user?.avatar ? (
           <Image
-            src="user?.avatar"
+            src={user.avatar}
             alt={displayName}
             width={94}
             height={94}
             className={css.avatar}
+            unoptimized
             priority
           />
         ) : (
@@ -33,7 +37,9 @@ export default function UserBlock() {
               className={css.avatar}
               priority
             />
-            <button className={css.upload}>Upload photo</button>
+            <button className={css.upload} onClick={() => setIsEditOpen(true)}>
+              Upload photo
+            </button>
           </div>
         )}
       </div>
@@ -46,6 +52,7 @@ export default function UserBlock() {
           <div className={css.userPhone}>{displayPhone}</div>
         </div>
       </div>
+      {isEditOpen && <ModalEditUser onClose={() => setIsEditOpen(false)} />}
     </section>
   );
 }

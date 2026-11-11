@@ -15,6 +15,33 @@ const manrope = Manrope({
 export const metadata: Metadata = {
   title: 'Petlove',
   description: 'Take good care of your small pets',
+
+  openGraph: {
+    title: 'Petlove 🐾',
+    description: 'Take good care of your small pets. Find love, care and happiness for your pets.',
+    url: 'https://your-petlove-site.vercel.app/',
+    siteName: 'Petlove',
+    images: [
+      {
+        url: 'https://your-petlove-site.vercel.app/tablet1x.webp',
+        width: 1200,
+        height: 630,
+        alt: 'Petlove preview',
+      },
+    ],
+    type: 'website',
+  },
+
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Petlove 🐾',
+    description: 'Take good care of your small pets.',
+    images: ['https://your-petlove-site.vercel.app/tablet1x.webp'],
+  },
+
+  alternates: {
+    canonical: 'https://your-petlove-site.vercel.app/',
+  },
 };
 
 export default function RootLayout({

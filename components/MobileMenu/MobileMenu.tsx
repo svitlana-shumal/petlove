@@ -18,7 +18,8 @@ export default function MobileMenu({ onClose }: MobileMenuProps) {
   const pathname = usePathname();
   const isHome = pathname === '/home';
 
-  const { user } = useAuthStore();
+  const user = useAuthStore((state) => state.user);
+  const isAuthLoading = useAuthStore((state) => state.isAuthLoading);
   const handleBackdropClick = (event: React.MouseEvent<HTMLDivElement>) => {
     if (event.target === event.currentTarget) {
       onClose();
@@ -55,7 +56,7 @@ export default function MobileMenu({ onClose }: MobileMenuProps) {
           </svg>
         </button>
         <Nav onClose={onClose} />
-        {user ? <LogOutBtn /> : <AuthNav onClose={onClose} />}
+        {!isAuthLoading && (user ? <LogOutBtn /> : <AuthNav onClose={onClose} />)}
       </div>
     </div>,
     document.body

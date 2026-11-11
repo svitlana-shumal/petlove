@@ -9,7 +9,11 @@ interface SearchFieldProp {
   className?: string;
 }
 
-export default function SearchField({ onSearch, placeholder = 'Search' }: SearchFieldProp) {
+export default function SearchField({
+  onSearch,
+  placeholder = 'Search',
+  className,
+}: SearchFieldProp) {
   const [query, setQuery] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -27,7 +31,7 @@ export default function SearchField({ onSearch, placeholder = 'Search' }: Search
   };
 
   return (
-    <form className={css.searchCont} onSubmit={handleSubmit}>
+    <form className={[css.searchCont, className].filter(Boolean).join(' ')} onSubmit={handleSubmit}>
       <input
         type="text"
         name="search"

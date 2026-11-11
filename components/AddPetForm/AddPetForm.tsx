@@ -8,6 +8,7 @@ import Title from '../Title/Title';
 import css from './AddPetForm.module.css';
 import Image from 'next/image';
 import { addPet } from '@/lib/clientApi';
+import { useAuthStore } from '@/lib/store/auth';
 import toast from 'react-hot-toast';
 import { PetFormValues, sexOptions, speciesOptions } from '@/types/pets';
 import { Sex, Species } from '@/types/notices';
@@ -30,6 +31,7 @@ const schema = Yup.object().shape({
 
 export default function AddPetForm() {
   const router = useRouter();
+  const refreshUser = useAuthStore((state) => state.refreshUser);
 
   const {
     register,
@@ -40,6 +42,13 @@ export default function AddPetForm() {
   const onSubmit = async (data: PetFormValues) => {
     try {
       await addPet(data);
+      try {
+        await refreshUser();
+      } catch (error) {
+        const message =
+          error instanceof Error ? error.message : 'Unable to refresh your profile.';
+        toast.error(`Pet was added, but profile refresh failed: ${message}`);
+      }
       toast.success('Pet added successfully');
       router.push('/profile');
     } catch (error) {

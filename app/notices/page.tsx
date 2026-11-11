@@ -6,7 +6,7 @@ import Title from '@/components/Title/Title';
 import Pagination from '@/components/Pagination/Pagination';
 import NoticesFilter from '@/components/NoticesFilters/NoticesFilters';
 import NoticesList from '@/components/NoticesList/NoticesList';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { getNotices } from '@/lib/clientApi';
 import { FiltersState, NoticeDetails } from '@/types/notices';
 
@@ -15,6 +15,8 @@ export default function Notices() {
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const requestId = useRef(0);
 
   const [filters, setFilters] = useState<FiltersState>({
     search: '',
@@ -25,24 +27,13 @@ export default function Notices() {
     sort: null,
   });
 
-  function sortNotices(notices: NoticeDetails[], sort: FiltersState['sort']) {
-    switch (sort) {
-      case 'popular':
-        return [...notices].sort((a, b) => (b.popularity ?? 0) - (a.popularity ?? 0));
-      case 'unpopular':
-        return [...notices].sort((a, b) => (a.popularity ?? 0) - (b.popularity ?? 0));
-      case 'cheap':
-        return [...notices].sort((a, b) => (a.price ?? 0) - (b.price ?? 0));
-      case 'expensive':
-        return [...notices].sort((a, b) => (b.price ?? 0) - (a.price ?? 0));
-      default:
-        return notices;
-    }
-  }
-
   const loadNotices = useCallback(
     async (page: number = 1) => {
+      const currentRequestId = ++requestId.current;
       setLoading(true);
+      setError(null);
+      setNotices([]);
+      setTotalPages(1);
       try {
         const data = await getNotices({
           page,
@@ -52,16 +43,21 @@ export default function Notices() {
           sex: filters.sex ?? undefined,
           species: filters.species ?? undefined,
           locationId: filters.locationId ?? undefined,
+          sort: filters.sort ?? undefined,
         });
-        const sortedResults = sortNotices(data.results, filters.sort);
-        setNotices(sortedResults);
-        setPage(data.page);
-        setTotalPages(data.totalPages);
+        if (currentRequestId === requestId.current) {
+          setNotices(data.results);
+          setPage(data.page);
+          setTotalPages(data.totalPages);
+        }
       } catch (error) {
-        console.error('Error fetching notices:', error);
-        setNotices([]);
+        if (currentRequestId === requestId.current) {
+          setError(error instanceof Error ? error.message : 'Unable to load notices.');
+        }
       } finally {
-        setLoading(false);
+        if (currentRequestId === requestId.current) {
+          setLoading(false);
+        }
       }
     },
     [filters]
@@ -81,7 +77,7 @@ export default function Notices() {
           );
         }}
       />
-      <NoticesList notices={notices} loading={loading} />
+      <NoticesList notices={notices} loading={loading} error={error} />
       <Pagination
         currentPage={page}
         totalPages={totalPages}

@@ -11,6 +11,8 @@ import toast from 'react-hot-toast';
 import { useState } from 'react';
 import Title from '../Title/Title';
 import Link from 'next/link';
+import { useAuthStore } from '@/lib/store/auth';
+import { useFavoritesStore } from '@/lib/store/favoritesStore';
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().trim().required('Name is a required field.'),
@@ -49,10 +51,22 @@ export default function RegistrationForm() {
   const onSubmit = async (data: Register) => {
     try {
       const result = await signUp(data);
-      if (result.token) {
-        toast.success('Registration successful 🎉');
-        router.push('/profile');
+      useAuthStore.getState().setUser(result);
+      try {
+        await useAuthStore.getState().refreshUser();
+      } catch (error) {
+        toast.error(
+          error instanceof Error
+            ? `Registered, but profile loading failed: ${error.message}`
+            : 'Registered, but profile loading failed'
+        );
       }
+      const favorites = useAuthStore
+        .getState()
+        .user?.noticesFavorites?.map((notice) => notice._id) ?? [];
+      useFavoritesStore.getState().setFavorites(favorites);
+      toast.success('Registration successful 🎉');
+      router.push('/profile');
     } catch (error) {
       if (error instanceof Error) toast.error(error.message || 'Registration failed');
     }

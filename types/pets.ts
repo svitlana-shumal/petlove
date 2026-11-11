@@ -10,6 +10,15 @@ export type Pet = {
 };
 
 export type PetFormValues = Pet;
+export type ProfilePet = {
+  _id: string;
+  name: string;
+  title: string;
+  imgURL: string;
+  species: Species;
+  birthday: string;
+  sex: Sex;
+};
 
 export const speciesOptions: Species[] = [
   'dog',

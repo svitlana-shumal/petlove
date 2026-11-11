@@ -11,7 +11,7 @@ export async function GET(request: NextRequest) {
     const params: NoticesQueryParams = {
       keyword: searchParams.get('keyword') || undefined,
       page: Number(searchParams.get('page') ?? 1),
-      limit: Number(searchParams.get('perPage') ?? 6),
+      limit: Number(searchParams.get('limit') ?? searchParams.get('perPage') ?? 6),
       category: (searchParams.get('category') as NoticesQueryParams['category']) || undefined,
       sex: (searchParams.get('sex') as NoticesQueryParams['sex']) || undefined,
       species: (searchParams.get('species') as NoticesQueryParams['species']) || undefined,

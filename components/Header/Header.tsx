@@ -12,14 +12,25 @@ import AuthNav from '@/components/AuthNav/AuthNav';
 import UserBar from '@/components/UserBar/UserBar';
 import LogOutBtn from '@/components/LogOutBtn/LogOutBtn';
 import { useMediaQuery } from '@/hooks/useMediaQuery';
+import { useFavoritesStore } from '@/lib/store/favoritesStore';
 
 export default function Header() {
   const pathname = usePathname();
   const isHome = pathname === '/home';
   const [isOpen, setIsOpen] = useState(false);
-  const { user } = useAuthStore();
+  const user = useAuthStore((state) => state.user);
+  const isAuthLoading = useAuthStore((state) => state.isAuthLoading);
+  const refreshUser = useAuthStore((state) => state.refreshUser);
 
   const isMobile = useMediaQuery('(max-width: 767px)');
+
+  useEffect(() => {
+    refreshUser()
+      .then(() => useFavoritesStore.getState().loadFavorites())
+      .catch((error: unknown) => {
+        console.error('Failed to restore user session:', error);
+      });
+  }, [refreshUser]);
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : 'auto';
@@ -39,7 +50,7 @@ export default function Header() {
           </nav>
 
           <div className={css.right}>
-            {user ? (
+            {isAuthLoading ? null : user ? (
               <div className={css.authUser}>
                 {!isMobile && <LogOutBtn />}
                 <UserBar onClose={() => setIsOpen(false)} />

@@ -76,6 +76,20 @@
   fill: none;
   stroke: currentColor;
 }
+.resetBtn {
+  display: flex;
+  flex-wrap: nowrap;
+  border-radius: 30px;
+  padding: 10px 16px;
+  background-color: var(--text);
+  color: var(--secondary);
+  font-weight: 500;
+  cursor: pointer;
+}
+.resetBtn:hover {
+  background-color: var(--primary-orange);
+  color: var(--text);
+}
 .iconSearch {
   stroke: var(--secondary);
   fill: var(--text);

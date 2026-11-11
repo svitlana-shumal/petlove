@@ -1,28 +1,30 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { AxiosError } from 'axios';
+import {
+  ACCESS_TOKEN_COOKIE,
+  accessTokenCookieOptions,
+  apiErrorResponse,
+  withoutToken,
+} from '../../auth';
 import { api } from '../../api';
 
-type ApiError = AxiosError<{ error: string }>;
+type AuthResponse = { token?: string; name: string; email: string };
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const apiRes = await api.post('/users/signin', body, { withCredentials: true });
-    const res = NextResponse.json(apiRes.data);
+    const apiRes = await api.post<AuthResponse>('/users/signin', body);
 
-    if (apiRes.data.token) {
-      res.cookies.set('accessToken', apiRes.data.token, {
-        httpOnly: true,
-        path: '/',
-      });
+    if (!apiRes.data.token) {
+      return NextResponse.json(
+        { error: 'Backend did not return an access token' },
+        { status: 502 }
+      );
     }
+
+    const res = NextResponse.json(withoutToken(apiRes.data), { status: apiRes.status });
+    res.cookies.set(ACCESS_TOKEN_COOKIE, apiRes.data.token, accessTokenCookieOptions);
     return res;
   } catch (error: unknown) {
-    const err = error as ApiError;
-    console.error('Signin error:', err);
-    return NextResponse.json(
-      { error: err.response?.data?.error || (err as Error).message || 'Server error' },
-      { status: err.response?.status || 500 }
-    );
+    return apiErrorResponse(error);
   }
 }
