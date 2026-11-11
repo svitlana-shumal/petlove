@@ -20,6 +20,20 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
+## Avatar uploads
+
+Avatar images are uploaded directly to Cloudinary using an unsigned upload preset. Create a preset
+in your own Cloudinary account and set these variables in `.env.local` (and in the deployment
+environment, such as Vercel):
+
+```env
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=your_cloud_name
+NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET=your_unsigned_upload_preset
+```
+
+The app saves the returned image URL in the user's profile. The upload preset is public by design;
+restrict its allowed formats and upload size in Cloudinary settings. Images must be 10 MB or smaller.
+
 ## Learn More
 
 To learn more about Next.js, take a look at the following resources:

@@ -5,6 +5,7 @@ import { useAuthStore } from '@/lib/store/auth';
 import { useFavoritesStore } from '@/lib/store/favoritesStore';
 import { removeFavorites } from '@/lib/clientApi';
 import { Notice } from '@/types/notices';
+import Link from 'next/link';
 import NoticesItem from '@/components/NoticesItem/NoticesItem';
 import toast from 'react-hot-toast';
 import css from './MyNotices.module.css';
@@ -97,9 +98,18 @@ export default function MyNotices() {
         </ul>
       ) : (
         <p className={css.empty}>
-          {activeTab === 'favorites'
-            ? "Oops, looks like there aren't any furries on our adorable page yet. Do not worry! View your pets on the “find your favorite pet” page and add them to your favorites."
-            : 'You have not viewed any notices yet.'}
+          {activeTab === 'favorites' ? (
+            <span>
+              Oops,&#32;
+              <Link href="/notices" className={css.emptyLink}>
+                looks like there aren&apos;t any furries
+              </Link>
+              &#32;on our adorable page yet. Do not worry! View your pets on the “find your favorite
+              pet” page and add them to your favorites.
+            </span>
+          ) : (
+            'You have not viewed any notices yet.'
+          )}
         </p>
       )}
     </section>

@@ -41,6 +41,14 @@
   text-align: center;
 }
 
+.emptyLink {
+  color: var(--primary-orange);
+}
+
+.emptyLink:hover {
+  text-decoration: underline;
+}
+
 @media (min-width: 768px) {
   .tabs {
     gap: 10px;
