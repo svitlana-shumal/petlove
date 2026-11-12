@@ -42,10 +42,8 @@ export type NoticesQueryParams = {
   sex?: Sex;
   locationId?: string;
   sort?: 'popular' | 'unpopular' | 'cheap' | 'expensive';
-  isPopularitySort?: boolean;
-  isUnpopularSort?: boolean;
-  isPriceSortAsc?: boolean;
-  isPriceSortDesc?: boolean;
+  byPopularity?: boolean;
+  byPrice?: boolean;
   page?: number;
   limit?: number;
 };

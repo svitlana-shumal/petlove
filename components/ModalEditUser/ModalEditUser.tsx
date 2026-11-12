@@ -10,6 +10,7 @@ import { useForm, useWatch } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import toast from 'react-hot-toast';
 import { currentEdit } from '@/lib/clientApi';
+import { getImageFileError, uploadImageToCloudinary } from '@/lib/cloudinary';
 import { EditUser } from '@/types/users';
 
 interface ModalEditUserProp {
@@ -98,21 +99,9 @@ export default function ModalEditUser({ onClose }: ModalEditUserProp) {
     const file = input.files?.[0];
     if (!file) return;
 
-    if (!file.type.startsWith('image/')) {
-      toast.error('Choose an image file');
-      input.value = '';
-      return;
-    }
-    if (file.size > 10 * 1024 * 1024) {
-      toast.error('Image must be 10 MB or smaller');
-      input.value = '';
-      return;
-    }
-
-    const cloudName = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME;
-    const uploadPreset = process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET;
-    if (!cloudName || !uploadPreset) {
-      toast.error('Avatar upload is not configured');
+    const fileError = getImageFileError(file);
+    if (fileError) {
+      toast.error(fileError);
       input.value = '';
       return;
     }
@@ -121,42 +110,11 @@ export default function ModalEditUser({ onClose }: ModalEditUserProp) {
     setAvatarPreview(URL.createObjectURL(file));
     setIsUploading(true);
     const toastId = toast.loading('Uploading photo...');
-    const formData = new FormData();
-    formData.append('file', file);
-    formData.append('upload_preset', uploadPreset);
 
     try {
-      const response = await fetch(
-        `https://api.cloudinary.com/v1_1/${encodeURIComponent(cloudName)}/image/upload`,
-        { method: 'POST', body: formData }
-      );
-      const result: unknown = await response.json().catch(() => null);
-
-      if (!response.ok) {
-        const errorMessage =
-          result &&
-          typeof result === 'object' &&
-          'error' in result &&
-          result.error &&
-          typeof result.error === 'object' &&
-          'message' in result.error &&
-          typeof result.error.message === 'string'
-            ? result.error.message
-            : `Photo upload failed (${response.status})`;
-        throw new Error(errorMessage);
-      }
-
-      if (
-        !result ||
-        typeof result !== 'object' ||
-        !('secure_url' in result) ||
-        typeof result.secure_url !== 'string'
-      ) {
-        throw new Error('Cloudinary returned an invalid upload response');
-      }
-
-      setValue('avatar', result.secure_url, { shouldDirty: true, shouldValidate: true });
-      setAvatarPreview(result.secure_url);
+      const uploadedUrl = await uploadImageToCloudinary(file);
+      setValue('avatar', uploadedUrl, { shouldDirty: true, shouldValidate: true });
+      setAvatarPreview(uploadedUrl);
       toast.success('Photo uploaded', { id: toastId });
     } catch (error) {
       setAvatarPreview(previousPreview);

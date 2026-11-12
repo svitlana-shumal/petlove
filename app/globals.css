@@ -15,7 +15,10 @@
   --stroke: rgba(38, 38, 38, 0.05);
   --input: rgba(38, 38, 38, 0.5);
   --red: #ef2447;
+  --blue: rgba(84, 173, 255, 0.1);
   --green: #08aa83;
+  --red-hover: #f43f5e;
+  --blue-hover: #54adff;
 }
 
 html,

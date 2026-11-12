@@ -4,9 +4,6 @@
   height: 100%;
   border-radius: 16px;
 }
-.itemCont:hover {
-  box-shadow: 16px 5px 16px rgba(0, 0, 0, 0.12);
-}
 .newsPhoto {
   width: 100%;
   height: 226px;
@@ -58,6 +55,9 @@
   text-decoration: underline;
   text-decoration-skip-ink: none;
   color: var(--primary-orange);
+}
+.link:hover {
+  color: var(--hover);
 }
 
 @media screen and (min-width: 768px) {

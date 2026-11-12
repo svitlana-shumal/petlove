@@ -17,10 +17,8 @@ export async function GET(request: NextRequest) {
       species: (searchParams.get('species') as NoticesQueryParams['species']) || undefined,
       locationId: searchParams.get('locationId') || undefined,
 
-      isPopularitySort: sort === 'popular' ? true : undefined,
-      isUnpopularSort: sort === 'unpopular' ? true : undefined,
-      isPriceSortAsc: sort === 'cheap' ? true : undefined,
-      isPriceSortDesc: sort === 'expensive' ? true : undefined,
+      byPopularity: sort === 'popular' ? false : sort === 'unpopular' ? true : undefined,
+      byPrice: sort === 'cheap' ? true : sort === 'expensive' ? false : undefined,
     };
 
     const res = await api.get<FetchPetsResponse>('/notices', { params });

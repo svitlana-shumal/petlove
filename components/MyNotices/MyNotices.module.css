@@ -21,13 +21,14 @@
   background-color: var(--primary-orange);
   color: var(--text);
 }
-
+.active:hover {
+  background-color: var(--hover);
+}
 .list {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   gap: 16px;
 }
-
 .empty {
   display: flex;
   min-height: 340px;

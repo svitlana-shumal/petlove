@@ -58,8 +58,6 @@
 .details {
   display: flex;
   flex-wrap: nowrap;
-  /* align-items: flex-start;
-  justify-content: flex-start; */
   flex-direction: row;
   gap: 14px;
 }
@@ -114,6 +112,9 @@
   height: 46px;
   background-color: var(--accent);
 }
+.btnFavorite:hover {
+  background-color: var(--accent-hover);
+}
 .removeFavorite {
   display: grid;
   width: 40px;
@@ -134,10 +135,12 @@
   stroke-linecap: round;
   stroke-linejoin: round;
 }
+
 .iconHeard {
   stroke: var(--primary-orange);
   fill: var(--primary-orange);
 }
+
 .iconHeardFavor {
   stroke: var(--primary-orange);
   fill: none;

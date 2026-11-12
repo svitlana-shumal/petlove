@@ -10,6 +10,10 @@ type PetsItemProps = {
   isRemoving: boolean;
 };
 
+function capitalize(value: string) {
+  return value.charAt(0).toUpperCase() + value.slice(1);
+}
+
 export default function PetsItem({ pet, onRemove, isRemoving }: PetsItemProps) {
   return (
     <li className={css.item}>
@@ -24,10 +28,22 @@ export default function PetsItem({ pet, onRemove, isRemoving }: PetsItemProps) {
       <div className={css.info}>
         <h3 className={css.title}>{pet.title}</h3>
         <dl className={css.details}>
-          <div><dt>Name</dt><dd>{pet.name}</dd></div>
-          <div><dt>Birthday</dt><dd>{new Date(pet.birthday).toLocaleDateString('uk-UA')}</dd></div>
-          <div><dt>Sex</dt><dd>{pet.sex}</dd></div>
-          <div><dt>Species</dt><dd>{pet.species}</dd></div>
+          <div>
+            <dt>Name</dt>
+            <dd>{pet.name}</dd>
+          </div>
+          <div>
+            <dt>Birthday</dt>
+            <dd>{new Date(pet.birthday).toLocaleDateString('uk-UA')}</dd>
+          </div>
+          <div>
+            <dt>Sex</dt>
+            <dd>{capitalize(pet.sex)}</dd>
+          </div>
+          <div>
+            <dt>Species</dt>
+            <dd>{capitalize(pet.species)}</dd>
+          </div>
         </dl>
       </div>
       <button

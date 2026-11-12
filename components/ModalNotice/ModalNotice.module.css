@@ -150,6 +150,9 @@
   flex-direction: row;
   gap: 8px;
 }
+.favoriteBtn:hover {
+  background-color: var(--hover);
+}
 .contact {
   border-radius: 30px;
   padding: 12px 37px;
@@ -159,6 +162,9 @@
   font-size: 16px;
   line-height: 1.25;
   letter-spacing: -0.03em;
+}
+.contact:hover {
+  background-color: var(--accent-hover);
 }
 @media screen and (min-width: 768px) {
   .backdrop {

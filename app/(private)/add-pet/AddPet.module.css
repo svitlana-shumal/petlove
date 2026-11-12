@@ -1,0 +1,31 @@
+.page {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 10px;
+}
+
+.page :global(picture) {
+  height: 212px;
+}
+
+@media screen and (min-width: 768px) {
+  .page {
+    gap: 16px;
+  }
+
+  .page :global(picture) {
+    height: 252px;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .page {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    align-items: stretch;
+    gap: 32px;
+  }
+
+  .page :global(picture) {
+    height: 654px;
+  }
+}

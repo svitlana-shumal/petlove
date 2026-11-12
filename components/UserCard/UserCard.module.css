@@ -1,5 +1,6 @@
 .profileInfo {
   width: 100%;
+  min-width: 0;
   border-radius: 30px;
   background-color: var(--text);
   padding: 18px 20px 40px 20px;

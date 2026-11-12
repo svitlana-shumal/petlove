@@ -1,73 +1,364 @@
 .addPetForm {
-  background-color: var(--text);
+  min-width: 0;
+  padding: 28px 20px 24px;
   border-radius: 30px;
-  padding: 0 20px 20px 20px;
-  margin-top: 10px;
+  background-color: var(--text);
 }
+
 .title {
   display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: baseline;
   gap: 8px;
-  margin-bottom: 24px;
+  margin-bottom: 20px;
 }
+
+.title h1 {
+  margin-top: 0;
+  font-size: 28px;
+  line-height: 1.14;
+  white-space: nowrap;
+}
+
 .spanPerson {
-  font-weight: 700;
-  font-size: 14px;
-  line-height: 1.28;
   color: rgba(43, 43, 42, 0.4);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.28;
+  white-space: nowrap;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
 }
 
 .radioGroup {
   display: flex;
-  align-items: flex-start;
-  justify-content: flex-start;
-  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
   gap: 8px;
-  appearance: none;
 }
 
 .radio {
-  border-radius: 30px;
-  padding: 6px;
-  background: rgba(244, 63, 94, 0.1);
+  position: relative;
+  display: flex;
+  width: 32px;
+  height: 32px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.radio input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.radio svg {
+  width: 20px;
+  height: 20px;
+}
+
+.radio:nth-child(1) svg,
+.radio:nth-child(2) svg {
+  fill: none;
+  stroke: currentColor;
+}
+
+.radio:nth-child(3) svg {
+  fill: currentColor;
+}
+
+.radio:has(input:focus-visible) {
+  outline: 2px solid var(--secondary);
+  outline-offset: 2px;
+}
+
+.radio:has(input:checked) {
+  box-shadow: 0 0 0 1px currentColor;
+}
+
+.radio:nth-child(1) {
+  color: var(--red-hover);
+  background-color: rgba(244, 63, 94, 0.1);
+}
+.radio:nth-child(1):hover {
+  color: var(--text);
+  background-color: var(--red-hover);
+}
+.radio:nth-child(2) {
+  color: var(--blue-hover);
+  background-color: rgba(59, 158, 255, 0.1);
+}
+.radio:nth-child(2):hover {
+  color: var(--text);
+  background-color: var(--blue-hover);
+}
+.radio:nth-child(3) {
+  color: var(--primary-orange);
+  background-color: var(--accent);
+}
+.radio:nth-child(3):hover {
+  color: var(--text);
+  background-color: var(--primary-orange);
+}
+.fields {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 10px;
 }
 
 .imageAvatar {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 8px;
-  margin-bottom: 16px;
+  margin: -4px 0 6px;
 }
+
 .avatar {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.field {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.imageField {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.imageUrlRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: start;
+  gap: 8px;
+}
+
+.fileInput {
+  display: none;
+}
+
+.uploadBtn {
+  display: flex;
+  min-height: 42px;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 0 12px;
+  border-radius: 30px;
+  background-color: var(--accent);
+  color: var(--secondary);
+  font-size: 12px;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.uploadBtn svg {
+  flex: 0 0 auto;
+  color: var(--primary-orange);
+}
+
+.uploadBtn:hover {
+  background-color: var(--accent-hover);
+}
+
+.uploadBtn:disabled {
+  cursor: wait;
+  opacity: 0.7;
+}
+
+.input:disabled {
+  opacity: 0.7;
+}
+
+.input {
+  width: 100%;
+  min-width: 0;
+  height: 42px;
+  padding: 0 12px;
+  border: 1px solid var(--light-grey);
+  border-radius: 30px;
+  outline: none;
+  background-color: var(--text);
+  color: var(--secondary);
+  font: inherit;
+  font-size: 14px;
+  line-height: 1.28;
+}
+
+.input::placeholder {
+  color: var(--input);
+  opacity: 1;
+}
+
+.input:focus {
+  border-color: var(--primary-orange);
+}
+
+.fieldRow {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 8px;
+}
+
+.speciesField {
+  position: relative;
+}
+
+.species {
+  appearance: none;
+  padding-right: 36px;
+  color: var(--input);
+  cursor: pointer;
+}
+
+.species:has(option:checked:not([value=''])) {
+  color: var(--secondary);
+}
+
+.speciesField::after {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 8px;
+  height: 8px;
+  transform: rotate(45deg);
+  border-right: 1.5px solid var(--secondary);
+  border-bottom: 1.5px solid var(--secondary);
+  content: '';
+  pointer-events: none;
+}
+
+.error {
+  margin-left: 12px;
+  color: var(--red);
+  font-size: 11px;
+  line-height: 1.25;
 }
 
 .buttons {
   display: flex;
-  align-items: flex-end;
   justify-content: flex-end;
-  flex-direction: row;
   gap: 8px;
-  margin-top: 31px;
+  margin-top: 12px;
 }
+
 .back,
 .submit {
+  min-width: 100px;
+  padding: 12px 24px;
   border-radius: 30px;
-  padding: 12px 26px;
-  background-color: rgba(38, 38, 38, 0.05);
-  font-weight: 700;
   font-size: 14px;
+  font-weight: 700;
   line-height: 1.28;
-  letter-spacing: -0.03em;
+}
+
+.back {
+  background-color: var(--stroke);
   color: var(--secondary);
 }
-.back {
-  padding: 12px 34px;
-}
-.back:hover,
-.submit:hover {
-  color: var(--text);
+
+.submit {
   background-color: var(--primary-orange);
+  color: var(--text);
+}
+
+.back:hover {
+  background-color: var(--accent);
+}
+
+.submit:hover {
+  background-color: var(--hover);
+}
+
+@media screen and (min-width: 768px) {
+  .addPetForm {
+    width: 100%;
+    max-width: 704px;
+    margin: 0 auto;
+    padding: 40px;
+    border-radius: 60px;
+  }
+
+  .title {
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 24px;
+  }
+
+  .title h1 {
+    font-size: 32px;
+  }
+
+  .spanPerson {
+    font-size: 16px;
+  }
+
+  .form {
+    width: 100%;
+    max-width: 440px;
+    margin: 0 auto;
+    gap: 20px;
+  }
+
+  .fields {
+    gap: 12px;
+  }
+
+  .input {
+    height: 44px;
+    padding: 0 16px;
+    font-size: 16px;
+  }
+
+  .uploadBtn {
+    min-height: 44px;
+    padding: 0 14px;
+    font-size: 14px;
+  }
+
+  .speciesField::after {
+    top: 16px;
+    right: 20px;
+  }
+
+  .buttons {
+    margin-top: 20px;
+  }
+
+  .back,
+  .submit {
+    min-width: 135px;
+    padding: 14px 30px;
+    font-size: 16px;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .addPetForm {
+    display: flex;
+    max-width: none;
+    min-height: 654px;
+    flex-direction: column;
+    justify-content: center;
+    padding: 48px;
+  }
+
+  .title h1 {
+    font-size: 36px;
+  }
 }
