@@ -215,34 +215,6 @@
   gap: 8px;
 }
 
-.speciesField {
-  position: relative;
-}
-
-.species {
-  appearance: none;
-  padding-right: 36px;
-  color: var(--input);
-  cursor: pointer;
-}
-
-.species:has(option:checked:not([value=''])) {
-  color: var(--secondary);
-}
-
-.speciesField::after {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  width: 8px;
-  height: 8px;
-  transform: rotate(45deg);
-  border-right: 1.5px solid var(--secondary);
-  border-bottom: 1.5px solid var(--secondary);
-  content: '';
-  pointer-events: none;
-}
-
 .error {
   margin-left: 12px;
   color: var(--red);
@@ -329,11 +301,6 @@
     min-height: 44px;
     padding: 0 14px;
     font-size: 14px;
-  }
-
-  .speciesField::after {
-    top: 16px;
-    right: 20px;
   }
 
   .buttons {

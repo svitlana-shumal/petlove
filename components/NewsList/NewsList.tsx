@@ -10,7 +10,7 @@ interface NewsListProp {
 }
 
 export default function NewsList({ news }: NewsListProp) {
-  if (!news) return <Loader />;
+  if (!news) return <Loader variant="inline" />;
 
   return (
     <ul className={css.list}>

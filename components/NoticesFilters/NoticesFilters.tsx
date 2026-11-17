@@ -123,7 +123,8 @@ export default function NoticesFilters({ onFilterChange }: NoticesFiltersProps) 
     }),
     menu: (base) => ({
       ...base,
-      borderRadius: 15,
+      borderRadius: 30,
+      overflow: 'hidden',
       marginTop: 4,
       color: 'rgba(38, 38, 38, 0.6)',
       backgroundColor: 'var(--text)',
@@ -134,12 +135,9 @@ export default function NoticesFilters({ onFilterChange }: NoticesFiltersProps) 
       padding: '10px 16px',
       fontSize: 14,
       fontWeight: 500,
-      backgroundColor: state.isFocused
-        ? 'var(--text)'
-        : state.isSelected
-          ? 'var(--text)'
-          : 'transparent',
-      color: state.isSelected ? 'var(--primary-orange)' : 'var(--grey-text)',
+      backgroundColor: 'var(--text)',
+      color:
+        state.isFocused || state.isSelected ? 'var(--primary-orange)' : 'var(--grey-text)',
       cursor: 'pointer',
     }),
     placeholder: (base) => ({
@@ -171,7 +169,8 @@ export default function NoticesFilters({ onFilterChange }: NoticesFiltersProps) 
     }),
     menu: (base) => ({
       ...base,
-      borderRadius: 12,
+      borderRadius: 30,
+      overflow: 'hidden',
       marginTop: 4,
       backgroundColor: 'var(--text)',
       boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
@@ -181,12 +180,12 @@ export default function NoticesFilters({ onFilterChange }: NoticesFiltersProps) 
       padding: '10px 16px',
       fontSize: 14,
       fontWeight: 500,
-      backgroundColor: state.isFocused
-        ? 'var(--primary-orange-light)'
-        : state.isSelected
+      backgroundColor: state.isSelected ? 'var(--primary-orange)' : 'var(--text)',
+      color: state.isSelected
+        ? '#fff'
+        : state.isFocused
           ? 'var(--primary-orange)'
-          : 'transparent',
-      color: state.isSelected ? '#fff' : 'var(--secondary)',
+          : 'var(--secondary)',
       cursor: 'pointer',
     }),
     placeholder: (base) => ({

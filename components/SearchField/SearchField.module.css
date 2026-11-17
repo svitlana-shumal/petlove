@@ -17,7 +17,7 @@
 }
 .input:hover,
 .input:focus {
-  border: 1px solid #f6b83d;
+  border-color: var(--primary-orange);
 }
 .inputBtn {
   position: absolute;

@@ -14,9 +14,10 @@ export default function Notices() {
   const [notices, setNotices] = useState<NoticeDetails[]>([]);
   const [page, setPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const requestId = useRef(0);
+  const [filterResetKey, setFilterResetKey] = useState(0);
 
   const [filters, setFilters] = useState<FiltersState>({
     search: '',
@@ -26,14 +27,13 @@ export default function Notices() {
     locationId: null,
     sort: null,
   });
+  const hasActiveFilters = Object.values(filters).some(Boolean);
 
   const loadNotices = useCallback(
     async (page: number = 1) => {
       const currentRequestId = ++requestId.current;
       setLoading(true);
       setError(null);
-      setNotices([]);
-      setTotalPages(1);
       try {
         const data = await getNotices({
           page,
@@ -52,6 +52,8 @@ export default function Notices() {
         }
       } catch (error) {
         if (currentRequestId === requestId.current) {
+          setNotices([]);
+          setTotalPages(1);
           setError(error instanceof Error ? error.message : 'Unable to load notices.');
         }
       } finally {
@@ -71,13 +73,20 @@ export default function Notices() {
     <Container className={css.cont}>
       <Title text="Find your favorite pet" />
       <NoticesFilter
+        key={filterResetKey}
         onFilterChange={(newFilters) => {
           setFilters((prev) =>
             JSON.stringify(prev) === JSON.stringify(newFilters) ? prev : newFilters
           );
         }}
       />
-      <NoticesList notices={notices} loading={loading} error={error} />
+      <NoticesList
+        notices={notices}
+        loading={loading}
+        error={error}
+        hasActiveFilters={hasActiveFilters}
+        onResetFilters={() => setFilterResetKey((key) => key + 1)}
+      />
       <Pagination
         currentPage={page}
         totalPages={totalPages}

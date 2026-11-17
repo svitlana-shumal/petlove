@@ -23,19 +23,25 @@ export default function Home() {
           <picture className={css.photo}>
             <source
               srcSet="/desktop1x.webp 1x,
-          /desktop1x.webp 2x"
+          /desktop2x.webp 2x"
               media="(min-width:1280px)"
             />
             <source
               srcSet="/tablet1x.webp 1x,
-          /tablet1x.webp 2x"
+          /tablet2x.webp 2x"
               media="(min-width:768px)"
             />
             <source
               srcSet="/mobile1x.webp 1x,
-          /mobile1x.webp 2x"
+          /mobile2x.webp 2x"
             />
-            <Image src="/tablet1x.webp" fill alt="Woman and a dog" className={css.mainPhoto} />
+            <Image
+              src="/tablet1x.webp"
+              fill
+              loading="eager"
+              alt="Woman and a dog"
+              className={css.mainPhoto}
+            />
           </picture>
         </div>
       </Container>

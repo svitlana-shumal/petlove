@@ -2,9 +2,10 @@
 
 import { useRouter } from 'next/navigation';
 import { useEffect, useRef, useState } from 'react';
-import { useForm, useWatch } from 'react-hook-form';
+import { Controller, useForm, useWatch } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
+import Select, { StylesConfig } from 'react-select';
 import Title from '../Title/Title';
 import css from './AddPetForm.module.css';
 import Image from 'next/image';
@@ -30,6 +31,64 @@ const schema = Yup.object().shape({
     .required('Birthday is required'),
   sex: Yup.mixed<Sex>().oneOf(sexOptions).required('Sex is required'),
 });
+
+type SpeciesOption = { value: Species; label: string };
+
+const speciesSelectOptions: SpeciesOption[] = speciesOptions.map((species) => ({
+  value: species,
+  label: species.charAt(0).toUpperCase() + species.slice(1),
+}));
+
+const speciesSelectStyles: StylesConfig<SpeciesOption, false> = {
+  control: (base, state) => ({
+    ...base,
+    minHeight: 42,
+    borderRadius: 30,
+    border: `1px solid ${state.isFocused ? 'var(--primary-orange)' : 'var(--light-grey)'}`,
+    boxShadow: 'none',
+    backgroundColor: 'var(--text)',
+    '&:hover': { borderColor: 'var(--primary-orange)' },
+  }),
+  menu: (base) => ({
+    ...base,
+    borderRadius: 16,
+    overflow: 'hidden',
+    marginTop: 4,
+    backgroundColor: 'var(--text)',
+    boxShadow: '0 4px 12px rgba(0,0,0,0.1)',
+  }),
+  menuList: (base) => ({ ...base, padding: '4px 0' }),
+  option: (base, state) => ({
+    ...base,
+    padding: '5px 12px',
+    fontSize: 16,
+    lineHeight: 1.25,
+    backgroundColor: 'var(--text)',
+    color: state.isFocused || state.isSelected ? 'var(--primary-orange)' : 'var(--grey-text)',
+    cursor: 'pointer',
+  }),
+  placeholder: (base) => ({
+    ...base,
+    margin: 0,
+    color: 'var(--input)',
+    fontSize: 14,
+  }),
+  singleValue: (base) => ({
+    ...base,
+    margin: 0,
+    color: 'var(--secondary)',
+    fontSize: 14,
+  }),
+  valueContainer: (base) => ({ ...base, padding: '0 12px' }),
+  input: (base) => ({ ...base, margin: 0, padding: 0 }),
+  dropdownIndicator: (base) => ({
+    ...base,
+    padding: '0 14px 0 8px',
+    color: 'var(--secondary)',
+    '&:hover': { color: 'var(--secondary)' },
+  }),
+  indicatorSeparator: () => ({ display: 'none' }),
+};
 
 export default function AddPetForm() {
   const router = useRouter();
@@ -224,15 +283,29 @@ export default function AddPetForm() {
               {errors.birthday && <p className={css.error}>{errors.birthday.message}</p>}
             </label>
 
-            <label className={`${css.field} ${css.speciesField}`}>
-              <select className={`${css.input} ${css.species}`} {...register('species')}>
-                <option value="">Type of pet</option>
-                {speciesOptions.map((item) => (
-                  <option key={item} value={item}>
-                    {item.charAt(0).toUpperCase() + item.slice(1)}
-                  </option>
-                ))}
-              </select>
+            <label className={css.field}>
+              <Controller
+                name="species"
+                control={control}
+                render={({ field }) => (
+                  <Select<SpeciesOption, false>
+                    instanceId="add-pet-species"
+                    inputId="add-pet-species"
+                    aria-label="Type of pet"
+                    options={speciesSelectOptions}
+                    value={
+                      speciesSelectOptions.find((option) => option.value === field.value) ?? null
+                    }
+                    onChange={(option) => field.onChange(option?.value ?? '')}
+                    onBlur={field.onBlur}
+                    ref={field.ref}
+                    placeholder="Type of pet"
+                    isSearchable={false}
+                    maxMenuHeight={120}
+                    styles={speciesSelectStyles}
+                  />
+                )}
+              />
               {errors.species && <p className={css.error}>{errors.species.message}</p>}
             </label>
           </div>

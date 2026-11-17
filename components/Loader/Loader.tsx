@@ -3,16 +3,30 @@
 import { useState, useEffect } from 'react';
 import css from './Loader.module.css';
 
-export default function Loader() {
+interface LoaderProps {
+  variant?: 'fullscreen' | 'inline';
+}
+
+export default function Loader({ variant = 'fullscreen' }: LoaderProps) {
   const [progress, setProgress] = useState(0);
 
   useEffect(() => {
+    if (variant === 'inline') return;
+
     const interval = setInterval(() => {
       setProgress((prev) => (prev < 100 ? prev + 1 : 100));
     }, 40);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [variant]);
+
+  if (variant === 'inline') {
+    return (
+      <div className={css.inline} role="status" aria-label="Loading">
+        <span className={css.spinner} aria-hidden="true" />
+      </div>
+    );
+  }
 
   return (
     <div className={css.wrapper}>
@@ -24,12 +38,12 @@ export default function Loader() {
         />
         <source
           srcSet="/dog/dog-tablet1x.webp 1x,
-          /dog/dog-tablet1x.webp 2x"
+          /dog/dog-tablet2x.webp 2x"
           media="(min-width:768px)"
         />
         <source
           srcSet="/dog/dog-mobile1x.webp 1x,
-          /dog/dog-mobile1x.webp 2x"
+          /dog/dog-mobile2x.webp 2x"
         />
 
         <img src="/dog/dog-tablet1x.webp" alt="Loading background" className={css.bg} />

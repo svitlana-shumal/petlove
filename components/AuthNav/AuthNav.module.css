@@ -9,38 +9,48 @@
 .register,
 .registerHome {
   border-radius: 30px;
-  padding: 12px 44px;
   font-weight: 700;
-  font-size: 14px;
   line-height: 1.28;
   letter-spacing: -0.03em;
   text-transform: uppercase;
   text-align: center;
   color: var(--text);
-  margin: 0 auto;
   width: 100%;
   max-width: 200px;
+  padding: 12px 44px;
+  font-size: 14px;
+  margin: 0 auto;
 }
 .login,
-.loginHome {
-  background-color: var(--primary-orange);
-  color: var(--text);
-}
-.register,
-.registerHome {
+.register {
   background-color: var(--accent);
   color: var(--primary-orange);
+}
+.loginHome,
+.registerHome {
+  border: 1px solid var(--text);
+  background-color: var(--primary-orange);
 }
 .login {
   border: 1px solid rgba(255, 255, 255, 0.5);
 }
-.login:hover,
-.loginHome:hover {
-  background-color: var(--hover);
-}
-.register:hover,
-.registerHome:hover {
+.login:active,
+.register:active {
   background-color: var(--accent-hover);
+}
+.login:hover,
+.register:hover {
+  background-color: var(--accent-hover);
+}
+.loginHome:hover,
+.registerHome:hover {
+  color: var(--hover);
+  background-color: var(--accent-hover);
+}
+.login:focus,
+.register:focus {
+  color: var(--text);
+  background-color: var(--primary-orange);
 }
 @media screen and (min-width: 768px) {
   .auth {
@@ -62,18 +72,8 @@
     font-size: 16px;
     margin: 0;
   }
-  .loginHome {
-    border: 1px solid var(--text);
-  }
 }
 @media screen and (min-width: 1280px) {
-  .loginHome:hover {
-    border: 1px solid var(--hover);
-    background-color: var(--hover);
-  }
-  .registerHome:hover {
-    background-color: var(--accent-hover);
-  }
   .auth {
     justify-content: flex-end;
     margin-right: auto;

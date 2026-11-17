@@ -17,6 +17,7 @@ export default function News() {
   const [notFound, setNotFound] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [keyword, setKeyword] = useState<string | undefined>(undefined);
+  const [searchResetKey, setSearchResetKey] = useState(0);
   const requestId = useRef(0);
 
   const loadNews = useCallback(async (keyword?: string, page: number = 1) => {
@@ -24,7 +25,6 @@ export default function News() {
     setLoading(true);
     setNotFound(false);
     setError(null);
-    setNews(null);
 
     try {
       const data = await fetchNews(keyword, page);
@@ -34,6 +34,7 @@ export default function News() {
       }
     } catch (error) {
       if (currentRequestId === requestId.current) {
+        setNews(null);
         setError(error instanceof Error ? error.message : 'Unable to load news. Please try again.');
       }
     } finally {
@@ -57,30 +58,47 @@ export default function News() {
     <Container className={css.contNews}>
       <div className={css.titleCont}>
         <Title text="News" />
-        <SearchField onSearch={handleSearch} />
+        <SearchField key={searchResetKey} onSearch={handleSearch} />
       </div>
-      {loading && <Loader />}
+      {loading && <Loader variant="inline" />}
       {!loading && error && (
         <p className={css.error} role="alert">
           {error}
         </p>
       )}
       {!loading && notFound && (
-        <div>
-          <h2 className={css.notFound}>
+        <div className={css.emptyState} role="status">
+          <h2 className={css.emptyTitle}>
             {keyword ? (
               <>
-                No <span className={css.word}>{keyword}</span> found.
+                No results for <span className={css.word}>“{keyword}”</span>
               </>
             ) : (
-              'No news available.'
+              'No news available yet'
             )}
           </h2>
-          {keyword && <p className={css.text}>Try changing your search parameters</p>}
+          <p className={css.emptyText}>
+            {keyword
+              ? 'Try a different search term, or clear your search.'
+              : 'Please check back later.'}
+          </p>
+          {keyword && (
+            <button
+              type="button"
+              className={css.clearSearchButton}
+              onClick={() => {
+                setKeyword(undefined);
+                setSearchResetKey((key) => key + 1);
+                void loadNews();
+              }}
+            >
+              Clear search
+            </button>
+          )}
         </div>
       )}
-      {!loading && !notFound && news && <NewsList news={news} />}
-      {!loading && !error && news && (
+      {!notFound && news && <NewsList news={news} />}
+      {!loading && !error && !notFound && news && (
         <Pagination
           currentPage={news?.page ?? 1}
           totalPages={news?.totalPages ?? 1}

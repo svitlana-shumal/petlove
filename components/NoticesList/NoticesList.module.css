@@ -5,6 +5,38 @@
   padding-bottom: 44px;
 }
 
+.emptyState {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 48px 20px;
+  text-align: center;
+}
+
+.emptyTitle {
+  font-size: 24px;
+  line-height: 1.2;
+  color: var(--secondary);
+}
+
+.emptyText {
+  font-size: 16px;
+  color: var(--grey-text);
+}
+
+.resetButton {
+  border-radius: 30px;
+  padding: 12px 24px;
+  background-color: var(--primary-orange);
+  color: var(--text);
+  font-weight: 700;
+}
+
+.resetButton:hover {
+  background-color: var(--hover);
+}
+
 @media screen and (min-width: 768px) {
   .list {
     display: grid;
@@ -12,6 +44,10 @@
     gap: 20px;
     row-gap: 20px;
     padding-bottom: 60px;
+  }
+
+  .emptyTitle {
+    font-size: 28px;
   }
 }
 @media screen and (min-width: 1280px) {

@@ -19,7 +19,12 @@ div.containerHero {
   width: 100%;
   height: 402px;
 }
-
+.photo {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
 .pageCont {
   border-radius: 0 0 30px 30px;
   background-color: var(--primary-orange);
