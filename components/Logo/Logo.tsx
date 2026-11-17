@@ -10,8 +10,8 @@ export default function Logo() {
 
   return (
     <div className={css.headerLogo}>
-      <Link href="/" className={css.logo}>
-        <svg className={css.logoIcon} width="76" height="20">
+      <Link href="/" className={css.logo} aria-label="Home Page PetLove">
+        <svg className={css.logoIcon} width="76" height="20" aria-hidden="true">
           <use href={`/symbol-defs.svg#${isHome ? 'icon-logo1' : 'icon-logo2'}`} />
         </svg>
       </Link>

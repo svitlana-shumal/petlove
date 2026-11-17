@@ -20,29 +20,14 @@ export default function Home() {
         </div>
 
         <div className={css.heroImgContainer}>
-          <picture className={css.photo}>
-            <source
-              srcSet="/desktop1x.webp 1x,
-          /desktop2x.webp 2x"
-              media="(min-width:1280px)"
-            />
-            <source
-              srcSet="/tablet1x.webp 1x,
-          /tablet2x.webp 2x"
-              media="(min-width:768px)"
-            />
-            <source
-              srcSet="/mobile1x.webp 1x,
-          /mobile2x.webp 2x"
-            />
-            <Image
-              src="/tablet1x.webp"
-              fill
-              loading="eager"
-              alt="Woman and a dog"
-              className={css.mainPhoto}
-            />
-          </picture>
+          <Image
+            src="/tablet1x.webp"
+            fill
+            priority
+            sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 600px"
+            alt="Woman and a dog"
+            className={css.mainPhoto}
+          />
         </div>
       </Container>
     </section>
