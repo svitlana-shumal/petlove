@@ -1,5 +1,3 @@
-'use client';
-
 import Container from '@/components/Container/Container';
 import css from './Home.module.css';
 import Image from 'next/image';
@@ -20,14 +18,25 @@ export default function Home() {
         </div>
 
         <div className={css.heroImgContainer}>
-          <Image
-            src="/tablet1x.webp"
-            fill
-            priority
-            sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 600px"
-            alt="Woman and a dog"
-            className={css.mainPhoto}
-          />
+          <picture className={css.heroPicture}>
+            <source
+              srcSet="/desktop1x.webp 1x, /desktop2x.webp 2x"
+              media="(min-width: 1280px)"
+            />
+            <source
+              srcSet="/tablet1x.webp 1x, /tablet2x.webp 2x"
+              media="(min-width: 768px)"
+            />
+            <source srcSet="/mobile1x.webp 1x, /mobile2x.webp 2x" />
+            <Image
+              src="/mobile1x.webp"
+              fill
+              priority
+              sizes="(max-width: 767px) calc(100vw - 40px), (max-width: 1279px) calc(100vw - 64px), 1152px"
+              alt="Woman and a dog"
+              className={css.mainPhoto}
+            />
+          </picture>
         </div>
       </Container>
     </section>

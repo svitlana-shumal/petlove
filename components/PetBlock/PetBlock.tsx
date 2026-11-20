@@ -19,7 +19,14 @@ export default function PetBlock({ images, alt, className }: PetBlockProp) {
       <picture className={css.picture}>
         <source srcSet={images.desktop} media="(min-width: 1280px)" />
         <source srcSet={images.tablet} media="(min-width:768px)" />
-        <Image src={images.mobile} alt={alt} fill className={css.image} priority />
+        <Image
+          src={images.mobile}
+          alt={alt}
+          fill
+          sizes="(max-width: 767px) calc(100vw - 40px), (max-width: 1279px) 704px, 592px"
+          className={css.image}
+          priority
+        />
       </picture>
     </div>
   );
